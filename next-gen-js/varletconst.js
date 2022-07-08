@@ -97,6 +97,14 @@ function testTDZ(){// no Referal error here because, when the call f() happens, 
     const f = ()=> console.log('testing tdz', x);
     //console.log(x);// could lead to error as this is TDZ for x now.
     let x = 20;
+    
+        //let x = 200; - no redeclare for let and const
+        //console.log(x);
+        var a =1;
+        var a =10; //- can redeclare var 
+        console.log(a);
+    
+    
     f();
 }
 testTDZ();

@@ -5,7 +5,7 @@
 
 
 ### ES-6:
-1. var, const and let
+1. var, const and let (Introduced BLOCK SCOPE(let, const) to add to existing FUNCTION SCOPE and GLOBAL SCOPE).
 2. var:
     - variable declaration and scope with be to the nearest/ immediate function. Ie; if we declare it in a block inside a function also, nearest function is that holding the block. So, scope will be that function.
     ```
@@ -31,6 +31,10 @@
     }
 
     ```
+    - let cannot be redeclared in same scope.But var can.
+        `let x = 10; let x = 20;` inside same block is error.
+    - let has immediate block scope  `let x = 10; {let x = 20;}` is ok since its different scope.
+    - let must declare before use. Else ReferenceError comes.
 4. const:
     - to define a constant value.
     - Error comes if we try to reassign value to the same const variable.
@@ -95,8 +99,56 @@
             }
            ```
            The above code gives error only when a call to it happens. Until then everything is fine.
-           test(); happens, ref err comes.
+           test(); happens, ref err comes. So, it is Temporal. 
 6. Why did ES6 came up with let?
     - To avoid confusions due to variables with function scope.
     - Eg: when we pass var into annonymous functions and if the value of that var gets changed, it get reflected inside that annonymous functions too. (see varletconst.js whyLetIsBetterThanVar())
     - But when we use let instead, the scope is within the block where it is delared. So, values comes as expected.
+
+7. ### "use strict"; (ES 5)
+    - Introduced from ES5
+    - This helps to introduce strict checks to reduce the errors even at comiple time.
+    - This is a string literal. If we add to top of script or inside a function or block, restricts
+    - using variables without declaration 
+    - restricts the use of certain current or future keywords as variable names
+    - a function with parameters having same name is error in strict mode
+    - *changes the way **this** keyword works.*
+        - this points to window if we are not defining it explicitly.
+        - this points to undefined if we are not defining and is in strict mode within a function. But this is global scope in strict mode still points to global object.
+        - Usually, this points to the caller function.
+8. ### Arrow Function:
+    - Introduced in ES6
+    - Why?
+        - To write functions with minimum code/ syntax
+    - eg:
+    `
+    let arrow = (first, second)=>{console.log(first + second);}
+    `
+
+    ```
+    let arrow = (first, second)=>first + second; // returns sum directly.
+    console.log(arrow());//prints sum
+    ```
+    - *this* and arrow function:
+        - Arrow function does not have its own *this* value.
+        - this of arrow function is bound to closest non-arrow function in which arrow is defined. That will remain for the entire life of that arrow function.
+        - ### this is a keyword refering to an object. Which object it points to depends on context or how it is used.
+        - Usually *this* of a function represents the object who called that function. It can be another function, window, document, button etc. 
+        - *this* in global scope refers to *window* or global object.
+        - *this* in function scope refers to global object.  
+        - *this* in a function within an object gives that object scope
+        - *this* in a function in strict mode is *undefined*
+        - *this* in global scope in strict mode points to global object itslef.
+        - *this* in an arrow function will be having same value as immediate encosing function in which arrow function is defined.
+        - So, in case of arrow function, value of this will same as the value if we add
+        `console.log(this);` just one line above the definition of the arrow function.
+        ```
+        wrapper = {
+            function fun(){
+                console.log(this);//this is same as below print.
+                object = {
+                    arrow:()=>console.log(this);// points to same *this* of fun. Since fun() is a function, this of it points to wrapper object. 
+                }
+            }
+        }
+        ```
