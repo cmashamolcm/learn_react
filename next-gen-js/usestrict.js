@@ -26,3 +26,6 @@ useThis();
 useThisWithStrict();
 "use strict";
 console.log("Global this", this);
+
+x = 20;
+console.log(x);

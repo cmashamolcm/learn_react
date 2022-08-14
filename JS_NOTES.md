@@ -109,7 +109,7 @@
     - Introduced from ES5
     - This helps to introduce strict checks to reduce the errors even at comiple time.
     - This is a string literal. If we add to top of script or inside a function or block, restricts
-    - using variables without declaration 
+    - using variables without declaration inside a function is not allowed(`function fun(){x=20; console.log(x);} ` is error). But in class or global scope, we can do `x=20; console.log(x);`
     - restricts the use of certain current or future keywords as variable names
     - a function with parameters having same name is error in strict mode
     - *changes the way **this** keyword works.*
@@ -152,3 +152,88 @@
             }
         }
         ```
+9. ### Export and Import:
+    - export:
+        - ensures that an object exported can be used in other .js files by importing it.
+        - syntax:
+
+        case-1 - default export
+        ```
+        //sum.js file
+
+        const fun = function(a, b){
+            return a+b;
+        }
+        export default fun; // default means when someone imports just the sum.js file, by default object they get will be fun.
+        ```
+
+        case-2 - multiple export in one js file
+        ```
+        //sum.js file
+
+        const fun = function(a, b){
+            return a+b;
+        }
+        let minSum = 100;
+
+        export fun;
+        export minSum;
+        export const maxSum = 10000;
+        ```
+    - import:
+        - To use an object from other file. An object can be function, var, const etc.
+
+        case-1
+        ```
+        //calculator.js
+        import sumFun from './sum.js';
+
+        sumFun(1, 2);// will result in 3
+        ```
+
+        case-2
+        ```
+        //calculator.js
+        import {fun} from sum.js;//exact name required
+        import {minSum} from './sum.js';
+        //import {fun, minSum} from './sum.js'
+        //import {fun as sumFun} from './sum.js'
+
+        sumFun(1, 2);// will result in 3
+        minSum;//will be 100 here
+        ```
+
+10. ### Classes:
+    - A class is a template for object
+    - Technically, its a special kind of function
+    - A class has properties and methods
+    - A class will have special method called `constructor()`
+        - If not explicitly defined, a default no arg constructor will be used.
+        - Constructor gets invoked when `new` object creation happens.
+        - Param constructors are also possible.
+    - *By default, inside a class, * `"use strict";` *is applied automatically.*
+        - This helps to ensure that `this` maps properly to object created with `new`
+    - Class can inherit another class.
+        - If child class has derieved constructor, it is *mandatory to do* `super()` *from child's constructor. Else error comes.*  Refer Cat inside classes.js
+        - If child doesn't have a derived constructor, no error.
+        - If child has no derived constructor, parent has param constructor,
+            - child automatically gets a parametetirized constructor as that in Parent and 
+            - If we call `new Child(params)`, it invokes Child's default constructor with param and inside that, super(param). Eg: Refer Dog class in classes.js file
+        - `this` inside an inherited function from parent will print details of Child object. Not parent object. Similar to Java object concept.
+        - **Prototype of an object**
+            - Every object will have properties we defined and some additional set of properties. This additional set is called prototype.
+            - object._proto_ gives the prototype of an object.
+            - There will be prototype for this prototype object also and so on as a chain. This is called `prototype chain`. It ends when prototype becomes null for the inner most `Object` object.
+            - Object.getPrototypeOf(myObj); will give prototype of myObj.
+            ```
+            class Cat extends Animal{
+                name = "Tom";
+            }
+            let cat = new Cat();
+
+            Object.getPrototypeOf(cat);// will be Animal
+            Object.getPrototypeOf(Object.getPrototypeOf(cat));// prototype of animal will be Object.
+            Object.getPrototypeOf(Object.getPrototypeOf(Object.getPrototypeOf(cat)));// prototype of Object is prototype for js.
+            console.log(Object.getPrototypeOf(Object.getPrototypeOf(Object.getPrototypeOf(Object.getPrototypeOf(cats)))));// null.
+
+            ```
