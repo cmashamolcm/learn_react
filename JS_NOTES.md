@@ -133,14 +133,14 @@
         - Arrow function does not have its own *this* value.
         - this of arrow function is bound to closest non-arrow function in which arrow is defined. That will remain for the entire life of that arrow function.
         - ### this is a keyword refering to an object. Which object it points to depends on context or how it is used.
-        - Usually *this* of a function represents the object who called that function. It can be another function, window, document, button etc. 
+        - Usually *this* of a function depends and varies based on the object who called that function. It can be another function, window, document, button etc. 
         - *this* in global scope refers to *window* or global object.
-        - *this* in function scope refers to global object.  
+        - *this* in function scope refers to global object if that function gets called from global scope.  
         - *this* in a function within an object gives that object scope
         - *this* in a function in strict mode is *undefined*
         - *this* in global scope in strict mode points to global object itslef.
         - *this* in an arrow function will be having same value as immediate encosing function in which arrow function is defined.
-        - So, in case of arrow function, value of this will same as the value if we add
+        - So, in case of arrow function, value of this will be same as the value if we add
         `console.log(this);` just one line above the definition of the arrow function.
         ```
         wrapper = {
