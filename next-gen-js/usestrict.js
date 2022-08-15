@@ -9,7 +9,7 @@ function testWithoutStrict(){
     console.log(x);
 }
 
-//testStrict();
+//testStrict();//gives error as we did x=20
 testWithoutStrict();
 
 
@@ -24,3 +24,8 @@ function useThisWithStrict(){
 
 useThis();
 useThisWithStrict();
+"use strict";
+console.log("Global this", this);
+
+x = 20;
+console.log(x);

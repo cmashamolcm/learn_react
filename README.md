@@ -1,20 +1,22 @@
 # React
 
-Basic way of working of a web application(very first form with only html):
+Basic way of working of a web application(very first form with only static html in Netscape era):
 ``` 
        |                      |
 client |-----http request---->|web server(hosting html pages)
        |                      |
        |<-----html page-------|
 ```
+When JSP(Java Server Pages) where introduced, more dynamic pages could be developed. But overhead of converting .jsp(Java scriptlet and tags and html) to html by webservers were too much in server side.
 
-Next level, browsers got the capability to support js(js + html form):
+Next level, browsers got the capability to support js(js + html form + js can create DOM elements):
 ``` 
        |                   
 client |-----event---------|
        |                   |             
        |<-----manipulate html DOM and show the user in client side itself.
-       |      (on click, show a dialog by adding it into the existing browser  |      DOM by defining each element step by step and add(eg: just-js))
+       |      (on click, show a dialog by adding it into the existing browser  
+       |      DOM by defining each element step by step and add(eg: just-js))
 ```
 
 Next level, React library comes:
@@ -23,7 +25,8 @@ Next level, React library comes:
 client |-----event---------|
        |                   |             
        |<-----manipulate html DOM and show the user in client side itself.
-       |      (on click, show a dialog by adding it into the existing browser  |      DOM. But this is more of declarative way(eg: define component. |      easily like an html tag))
+       |      (on click, show a dialog by adding it into the existing browser  |      DOM. But this is more of declarative way(eg: define component. 
+       |      easily like an html tag))
 ```
 
 ### What is React?

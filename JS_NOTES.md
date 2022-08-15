@@ -31,7 +31,7 @@
     }
 
     ```
-    - let cannot be redeclared in same scope.But var can.
+    - let cannot be redeclared in same scope.But var can. So, if redeclaration is not required, we can use `let` instead of `var`
         `let x = 10; let x = 20;` inside same block is error.
     - let has immediate block scope  `let x = 10; {let x = 20;}` is ok since its different scope.
     - let must declare before use. Else ReferenceError comes.
@@ -109,7 +109,7 @@
     - Introduced from ES5
     - This helps to introduce strict checks to reduce the errors even at comiple time.
     - This is a string literal. If we add to top of script or inside a function or block, restricts
-    - using variables without declaration 
+    - using variables without declaration inside a function is not allowed(`function fun(){x=20; console.log(x);} ` is error). But in class or global scope, we can do `x=20; console.log(x);`
     - restricts the use of certain current or future keywords as variable names
     - a function with parameters having same name is error in strict mode
     - *changes the way **this** keyword works.*
@@ -133,14 +133,14 @@
         - Arrow function does not have its own *this* value.
         - this of arrow function is bound to closest non-arrow function in which arrow is defined. That will remain for the entire life of that arrow function.
         - ### this is a keyword refering to an object. Which object it points to depends on context or how it is used.
-        - Usually *this* of a function represents the object who called that function. It can be another function, window, document, button etc. 
+        - Usually *this* of a function depends and varies based on the object who called that function. It can be another function, window, document, button etc. 
         - *this* in global scope refers to *window* or global object.
-        - *this* in function scope refers to global object.  
+        - *this* in function scope refers to global object if that function gets called from global scope.  
         - *this* in a function within an object gives that object scope
         - *this* in a function in strict mode is *undefined*
         - *this* in global scope in strict mode points to global object itslef.
         - *this* in an arrow function will be having same value as immediate encosing function in which arrow function is defined.
-        - So, in case of arrow function, value of this will same as the value if we add
+        - So, in case of arrow function, value of this will be same as the value if we add
         `console.log(this);` just one line above the definition of the arrow function.
         ```
         wrapper = {
@@ -152,3 +152,182 @@
             }
         }
         ```
+9. ### Export and Import:
+    - export:
+        - ensures that an object exported can be used in other .js files by importing it.
+        - syntax:
+
+        case-1 - default export
+        ```
+        //sum.js file
+
+        const fun = function(a, b){
+            return a+b;
+        }
+        export default fun; // default means when someone imports just the sum.js file, by default object they get will be fun.
+        ```
+
+        case-2 - multiple export in one js file
+        ```
+        //sum.js file
+
+        const fun = function(a, b){
+            return a+b;
+        }
+        let minSum = 100;
+
+        export fun;
+        export minSum;
+        export const maxSum = 10000;
+        ```
+    - import:
+        - To use an object from other file. An object can be function, var, const etc.
+
+        case-1
+        ```
+        //calculator.js
+        import sumFun from './sum.js';
+
+        sumFun(1, 2);// will result in 3
+        ```
+
+        case-2
+        ```
+        //calculator.js
+        import {fun} from sum.js;//exact name required
+        import {minSum} from './sum.js';
+        //import {fun, minSum} from './sum.js'
+        //import {fun as sumFun} from './sum.js'
+
+        sumFun(1, 2);// will result in 3
+        minSum;//will be 100 here
+        ```
+
+10. ### Classes:
+    - A class is a template for object
+    - Technically, its a special kind of function
+    - A class has properties and methods
+    - A class will have special method called `constructor()`
+        - If not explicitly defined, a default no arg constructor will be used.
+        - Constructor gets invoked when `new` object creation happens.
+        - Param constructors are also possible.
+    - *By default, inside a class, * `"use strict";` *is applied automatically.*
+        - This helps to ensure that `this` maps properly to object created with `new`
+    - Class can inherit another class.
+        - If child class has derieved constructor, it is *mandatory to do* `super()` *from child's constructor. Else error comes.*  Refer Cat inside classes.js
+        - If child doesn't have a derived constructor, no error.
+        - If child has no derived constructor, parent has param constructor,
+            - child automatically gets a parametetirized constructor as that in Parent and 
+            - If we call `new Child(params)`, it invokes Child's default constructor with param and inside that, super(param). Eg: Refer Dog class in classes.js file
+        - `this` inside an inherited function from parent will print details of Child object. Not parent object. Similar to Java object concept.
+        - **Prototype of an object**
+            - Every object will have properties we defined and some additional set of properties. This additional set is called prototype.
+            - object._proto_ gives the prototype of an object.
+            - There will be prototype for this prototype object also and so on as a chain. This is called `prototype chain`. It ends when prototype becomes null for the inner most `Object` object.
+            - Object.getPrototypeOf(myObj); will give prototype of myObj.
+            ```
+            class Cat extends Animal{
+                name = "Tom";
+            }
+            let cat = new Cat();
+
+            Object.getPrototypeOf(cat);// will be Animal
+            Object.getPrototypeOf(Object.getPrototypeOf(cat));// prototype of animal will be Object.
+            Object.getPrototypeOf(Object.getPrototypeOf(Object.getPrototypeOf(cat)));// prototype of Object is prototype for js.
+            console.log(Object.getPrototypeOf(Object.getPrototypeOf(Object.getPrototypeOf(Object.getPrototypeOf(cats)))));// null.
+
+            ```
+            - this helps in inheritance to identify properties from child till parent.
+11. ### Rest and Spread Operator (...):
+    - spread: (to unfold into something.)
+    ```
+        let stars = ["blue star", "morning star"];
+        let planets = ["earth", "saturn", "mars"];
+        let galaxy = ["moon", ...stars, ...planets, "sun"];
+        console.log(galaxy);// includes all. New array gets created and elements in order in which it is added in each array.
+
+        let catName = {
+            "name": "Tom"
+        }
+
+        let catColor = {
+            "color": "Black"
+        }
+
+        let cat = {
+            ...catName,
+            ...catColor
+        }
+        console.log(cat);// cat with name and color
+    ```
+    - rest: (similar to Java varargs. ... for function param )
+    ```
+        function test(...numbersToAdd){
+            let sum = 0;
+            numbersToAdd.forEach(num: numbersToAdd){
+                sum += num;
+            }
+            return sum;
+        }
+
+        test(1);
+        test(1, 2, 3);
+        test(...[1, 2, 3]);
+    ```
+ 12. ### Destructuring:   
+    - Taking out only specific properties from object or items from an array.
+    - eg:
+    ```
+    const galaxy = ['sun', 'moon', 'star1'];
+    let [center] = galaxy;
+    console.log(center);// will print sun
+    let [, partial, lighter] = galaxy;
+    console.log(partial);// will print moon
+    console.log(lighter);// will print star1
+
+    const {name} =  cat;
+    console.log(name);// will print Tom
+
+    ```
+ 13. ### Primitives vs Reference:  
+    - const num = 10; // is a primitive.
+    - objects and array are reference types.
+    ```
+    const obj1 = {
+        name: "Obj1"
+    }
+
+    const obj2 = obj1; // both points to same location now.
+
+    obj1.name = "Changed Name";
+    console.log(obj2.name);// will print Changed Name.
+
+    const array = [1, 2, 3, 4];
+    const reference = array;
+    reference[2] = 300;// 3->300
+    console.log(array);//1, 2, 300, 4
+    ```
+    - what will we do to copy the values from reference and preserve it from getting changed whiel using it?
+        - copy it instead of refer to same.
+        `reference = [...array];`// gives new array with same elements
+        `obj2 = {obj1};`// gives new obj with same properties
+14. ### array methods:
+    - map((item)=>item*2); //each element get affected
+    - filter(item=>item>5); //gets only items satifying the given condition
+    - reduce((item1, item2)=>item1+item2); //aggregate everything with an operator
+    - slice(startIndex, endIndex)
+        - get a shallow copy from array from start til just before end index.
+        - -ve index means count from last elemnet of array.
+        ```
+        array.slice(startIndex=0, endIndex=array.length);// start should be <= end
+
+        ```
+        - Existing array will be intact and a new array is getting returned from .slice();
+    - splice(startIndex, no:OfItemsToDelete, ...items to add in these deleted indices if required)
+    ```
+    let array = [1, 2, 3, 4, 5, 6, 7];
+    array.splice(3, 2, 200, 300, 400);// delete items in 3rd index, 4th index (2 items to delete). Add 200, 300, 400 to index 3. 
+    Result: 
+    array become 1, 2, 3, 200, 300, 400, 6, 7
+    we get from splice() -> [4, 5]
+    ```
