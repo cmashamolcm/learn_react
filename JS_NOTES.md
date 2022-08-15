@@ -31,7 +31,7 @@
     }
 
     ```
-    - let cannot be redeclared in same scope.But var can.
+    - let cannot be redeclared in same scope.But var can. So, if redeclaration is not required, we can use `let` instead of `var`
         `let x = 10; let x = 20;` inside same block is error.
     - let has immediate block scope  `let x = 10; {let x = 20;}` is ok since its different scope.
     - let must declare before use. Else ReferenceError comes.
@@ -237,3 +237,97 @@
             console.log(Object.getPrototypeOf(Object.getPrototypeOf(Object.getPrototypeOf(Object.getPrototypeOf(cats)))));// null.
 
             ```
+            - this helps in inheritance to identify properties from child till parent.
+11. ### Rest and Spread Operator (...):
+    - spread: (to unfold into something.)
+    ```
+        let stars = ["blue star", "morning star"];
+        let planets = ["earth", "saturn", "mars"];
+        let galaxy = ["moon", ...stars, ...planets, "sun"];
+        console.log(galaxy);// includes all. New array gets created and elements in order in which it is added in each array.
+
+        let catName = {
+            "name": "Tom"
+        }
+
+        let catColor = {
+            "color": "Black"
+        }
+
+        let cat = {
+            ...catName,
+            ...catColor
+        }
+        console.log(cat);// cat with name and color
+    ```
+    - rest: (similar to Java varargs. ... for function param )
+    ```
+        function test(...numbersToAdd){
+            let sum = 0;
+            numbersToAdd.forEach(num: numbersToAdd){
+                sum += num;
+            }
+            return sum;
+        }
+
+        test(1);
+        test(1, 2, 3);
+        test(...[1, 2, 3]);
+    ```
+ 12. ### Destructuring:   
+    - Taking out only specific properties from object or items from an array.
+    - eg:
+    ```
+    const galaxy = ['sun', 'moon', 'star1'];
+    let [center] = galaxy;
+    console.log(center);// will print sun
+    let [, partial, lighter] = galaxy;
+    console.log(partial);// will print moon
+    console.log(lighter);// will print star1
+
+    const {name} =  cat;
+    console.log(name);// will print Tom
+
+    ```
+ 13. ### Primitives vs Reference:  
+    - const num = 10; // is a primitive.
+    - objects and array are reference types.
+    ```
+    const obj1 = {
+        name: "Obj1"
+    }
+
+    const obj2 = obj1; // both points to same location now.
+
+    obj1.name = "Changed Name";
+    console.log(obj2.name);// will print Changed Name.
+
+    const array = [1, 2, 3, 4];
+    const reference = array;
+    reference[2] = 300;// 3->300
+    console.log(array);//1, 2, 300, 4
+    ```
+    - what will we do to copy the values from reference and preserve it from getting changed whiel using it?
+        - copy it instead of refer to same.
+        `reference = [...array];`// gives new array with same elements
+        `obj2 = {obj1};`// gives new obj with same properties
+14. ### array methods:
+    - map((item)=>item*2); //each element get affected
+    - filter(item=>item>5); //gets only items satifying the given condition
+    - reduce((item1, item2)=>item1+item2); //aggregate everything with an operator
+    - slice(startIndex, endIndex)
+        - get a shallow copy from array from start til just before end index.
+        - -ve index means count from last elemnet of array.
+        ```
+        array.slice(startIndex=0, endIndex=array.length);// start should be <= end
+
+        ```
+        - Existing array will be intact and a new array is getting returned from .slice();
+    - splice(startIndex, no:OfItemsToDelete, ...items to add in these deleted indices if required)
+    ```
+    let array = [1, 2, 3, 4, 5, 6, 7];
+    array.splice(3, 2, 200, 300, 400);// delete items in 3rd index, 4th index (2 items to delete). Add 200, 300, 400 to index 3. 
+    Result: 
+    array become 1, 2, 3, 200, 300, 400, 6, 7
+    we get from splice() -> [4, 5]
+    ```
