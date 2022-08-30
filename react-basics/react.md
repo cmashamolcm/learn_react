@@ -79,7 +79,42 @@
         - Java Script XML
         - Invented from React makers.
         - `This helps react to be declarative. Just use the tags and under the hood, react takes care of rendering it to DOM.`
-9. When we open browser console for  react app, we can see some static/js files. These are the transpiled version which holds react lib and our .js file parts as well. 
+    - At the end, all these custom tags will be just <div> with our component class name while checking in browser after transpile. *Ultimately, all become div with class*
+9. When we open browser console for  react app, we can see some static/js files. These are the transpiled version which holds react lib and our .js file parts as well. (`bundle.js` will hold all js transpiled if lazy loading is not done. Heavy item is data with html which will be loaded/ rendered on demand by react.)
+
+10. Write React component 
+    - **Function Component**:
+        - .js file holds a function which returns JSX.
+        - Export and inport component
+        - Ensure that custom component we create `should start with Capital letter` and used like that in tag.
+        - Only one root element per JSX code snippet only is allowed.
+        ```
+        function Test{
+            return (<div><h1>h1</h1><h2>h2</h2></div>)
+        }
+        
+        function Test{
+            return (<h1>h1</h1><h2>h2</h2>) //will give error as there are h1 and h2. Not single root element.
+        }
+        
+
+        but if we do like 
+        ```
+        - In JSX,
+            - class => className
+            - To use js code inside JSX, put {} and add js code inside that.
+11. Pass values across components using props:
+    - Components cannot use other component's propeties directly.
+    - In function component, all properties added in tag will form a single object of key-value pair which comes as the param of function component.
+    - In each component, it will be accessible as 
+        `props.key` ie; param.propName
+        *See ExpenseItems.js for sample*
+    - Way of creating smaller components and club together to form complete component with wrapper is **composition of components**. (group of smaller set of components) eg: Card
+        - Advantages:
+            - Allows to create own wrapper components to reuse
+            - props.children is the main feature that we use for such wrappers.
+            - Helps to apply similar style for any components. (like we can apply Card style to any custom component we make.)
+        
 
 
 
