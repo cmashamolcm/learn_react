@@ -113,9 +113,29 @@
     - restricts the use of certain current or future keywords as variable names
     - a function with parameters having same name is error in strict mode
     - *changes the way **this** keyword works.*
-        - this points to window if we are not defining it explicitly.
-        - this points to undefined if we are not defining and is in strict mode within a function. But this is global scope in strict mode still points to global object.
-        - Usually, this points to the caller function.
+        - this points to window? global object if we are not defining it explicitly.
+        - this points to undefined if we are not defining and is in strict mode within a function. 
+        - But this is global scope in strict mode still points to global object. 
+        - (this in global scope points to Golbal object in both strict and restricted modes.)
+        - Usually, this within a function points to the caller or the object to which the function bound to.
+        - Eg:
+        ```
+        obj1 ={
+            x: 100,
+            fun: function(){
+                console.log(this.x);
+            }
+        }
+        obj2 ={
+            x: 200,
+        }
+        
+        obj1.fun();// prints 100 as this is obj1
+        obj1.fun.bind(obj2)();// prints 200 as this is obj2
+        ```
+        What could be the reason for introducing strict mode in ES5:
+            - To avoid potential problems earilier itself
+            - Hide global object of app get exposed via browser to avoid security issues.
 8. ### Arrow Function:
     - Introduced in ES6
     - Why?
