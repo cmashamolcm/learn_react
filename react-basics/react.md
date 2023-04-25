@@ -161,6 +161,17 @@
    
    **Stateful means re-render. So, a bit more overhead. Mostly controlled, statless = presentational components are more in use/ preferred.**
    
+14. List of Components and Conditional Rendering:
+      - *Why key for a list of items is required?*
+         - 2 reasons.
+         - React re-renders the list of items if the length of item array is changed. Then it recreates each item components. If there is key, React will identify the components existing and i will get reused and new component for the one with new key from the list will get created.
+         - Without key, performance overhead of recreation of components for each item will be there.
+         - If any such item component has a state to manage (stateful item), that state will be lost due to re-creation for uncontrolled components.
+   If nothing specified, iteration index will be key. But this can lead to issues as mapping of component to state may get messed up for controlled components.
+   
+15. Styles added with {{}}.
+   Eg: `<div style={{height: 90px}}>`
+         
    
    
    
