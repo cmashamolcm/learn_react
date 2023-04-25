@@ -141,6 +141,26 @@
       - JSX is converted by Babel. React.createElement() is used in each file (previously we needed to add explicitly. But from v17, its automatically done).
       - It safeguards from DOM based cross-site-scriptting attacks. (https://www.stackhawk.com/blog/react-xss-guide-examples-and-prevention/#:~:text=If%20you%20check%20now%2C%20the,a%20DOM%2Dbased%20XSS%20attack.)
    
+13. Events and State:
+   - State helps to hold values that can change
+   - Props holds immutable values
+   - On state change, component gets scheduled to be re-evalated and re-rendered.
+   - useState() hook gives [snapshot, setter]. Only if we use setter, value chnage based re-render ocucures. Else not.
+   - setX() will be async
+   - When we need to use old value of state and do a partial update, better to use setX((oldSnapshot)=>{return oldSnapshot.updatedWith(newVal);}).
+   - State uplifting: To move state to parent so that other siblings also can get the changes from parent. Eg: When we add new expenses, it is lifted to add to set of expenses in App.js so that it can be fed to Expense items as well.
+   ##Controlled vs Uncontrolled components Stateful vs Stateless:
+   Stateful: Component with own state management
+   Statelsss: Component without own state
+   
+   controlled: State or view of these type of components are getting managed by parent or from outside. 
+   This will be STATELESS. Relies on props.
+   
+   uncontrolled: Those components whose view or state is not controlled by any other component. 
+   So, basically is STATEFUL. 
+   
+   **Stateful means re-render. So, a bit more overhead. Mostly controlled, statless = presentational components are more in use/ preferred.**
+   
    
    
    
