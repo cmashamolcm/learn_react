@@ -135,3 +135,18 @@
         - props.children is the main feature that we use for such wrappers.
         - Helps to apply similar style for any components. (like we can apply Card style to any custom component we make.)
 12. JSX:
+      - JavaScript + XML
+      - From React owners itself
+      - Syntactic sugar.
+      - JSX is converted by Babel. React.createElement() is used in each file (previously we needed to add explicitly. But from v17, its automatically done).
+      - It safeguards from DOM based cross-site-scriptting attacks. (https://www.stackhawk.com/blog/react-xss-guide-examples-and-prevention/#:~:text=If%20you%20check%20now%2C%20the,a%20DOM%2Dbased%20XSS%20attack.)
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
