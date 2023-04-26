@@ -171,7 +171,26 @@
    
 15. Styles added with {{}}.
    Eg: `<div style={{height: 90px}}>`
-         
+   - 2 ways of Conditional/ Dynamic styling:
+      * Inline styling -  problem is as it gets highest priority and difficult to manage.
+         Eg: 
+      ```
+         <label style={{color: isInValid?'red':'blue'}}>
+      ```
+      
+      * Conditonal className based - with the help of className property. Much better as .css file has the styles grouped.
+        
+         Eg:
+       ```
+          <label className={`myLabel ${isInValid?'red':'blue'}`}><label>// js inside ${} within ``
+        ```
+         Prolbem here, same style class name can be used in different components and hence change in one may affect others.
+         Then how can we make styles dynamic? 
+             
+      * One way is creating varient of a component using `styled-component` library 
+      * Another is use theming with chakra-UI etc.
+             The advantages here is, it will give us a class name which is dynamically generated. In UI inspect element, those class names will be with some random names. So, possible duplicates in different parts of application will be minimal.
+             https://styled-components.com/
    
    
    
