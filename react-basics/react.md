@@ -192,8 +192,48 @@
              The advantages here is, it will give us a class name which is dynamically generated. In UI inspect element, those class names will be with some random names. So, possible duplicates in different parts of application will be minimal.
              https://styled-components.com/
    
-   
-   
+16. Fragments:
+             **Why?** - React.createElement() processes each JSX and it cannot accept more than one JSX root element.
+             But its unnecessary if we add an extra `<div>` just because of that wrapping the adjacent elements.
+             What can be solutions for this?
+               * Use <div> to wrap - but adds extra div everytime just for wrapping purpose
+               * Use [] array to wrap. But the problem is, React asks for key for each item in array and its quite annoying.
+               * Custom wrapper
+                  `Wrapper = (props)=>{return props.children}` - this will not add any extra to the DOm. So, is better.
+               * Fragment is the default wrapper provided by React.
+                   `<><div>Div 1</div><h1>H1</h1></>`
+                    Here, `<></>` is called Fragment in short-hand.
+                     or
+                    <React.Fragment></React.Fragment> in broder way.
+             
+17. Portals:
+             - When we use dialog, modals, drawer etc. it's not ideally below root element. Instead, it comes on top of everything in body.
+             - So, its better to attach such components to another root in same level of root element.
+             - Portal helps us for that. ***Portal helps to attach a component to any element in real DOM.***
+             - From library `react-dom`
+             - Eg:
+               ```
+                  Create ErrorModal as;
+                  const ErrorModal = ()=>{
+                     const modal = [
+                           <div className={styles.backdrop}></div>,
+                           <Card className={styles.modal}>
+                              <header className={styles.header}>
+                                 <h2>{props.title}</h2>
+                              </header>
+                              <body className={styles.content}>
+                                 <p>{props.message}</p>
+                              </body>
+                              <footer className={styles.actions}>
+                                 <button onClick={props.resetError}>Ok</button>
+                              </footer>
+                           </Card>];
+                     return ReactDOM.createPortal(modal, docuemnt.getElementById('modal-root'));
+                  }
+             
+               Now, whenever we use <ErrorModal/>, it will get added to the modal-root.
+             // Ensure that public/index.html has <div id='modal-root'></div> in body tag near to root tag.
+               ```
    
    
    
