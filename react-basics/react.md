@@ -158,6 +158,7 @@
    
    uncontrolled: Those components whose view or state is not controlled by any other component. 
    So, basically is STATEFUL. 
+   Components with ref are uncontrolled since its states are not managed by any other React component. Its solely on Real DOM. (ie; own state or with ***ref*** makes one uncontrolled.)
    
    **Stateful means re-render. So, a bit more overhead. Mostly controlled, statless = presentational components are more in use/ preferred.**
    
@@ -247,6 +248,8 @@
        - Refers to an html element in Real/ Direct DOM.
        - useRef() hook from 'react' lib to be used to create a ref.
        - ***Not recommened to use as it can direcly manipulate the DOM. So, avoid `ref.current.value=something`. Even XSS can happen. Be careful.***
+       - Elements that uses ref is not controlled by React. But instead, its direcly the DOM element. So, such elements are uncontrolled.
+             Their internal states are managed by itself.
              
        eg:
              
