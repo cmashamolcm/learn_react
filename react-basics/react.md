@@ -238,6 +238,24 @@
              // Ensure that public/index.html has <div id='modal-root'></div> in body tag near to root tag.
              
          
+     Why is Portal part of ReactDOM?....its the lib that converts component to required browser understanable DOM structure. So, it has more control over the DOM manipulation.
+             
+
+             
+18. Ref:
+       - Reference
+       - Refers to an html element in Real/ Direct DOM.
+       - useRef() hook from 'react' lib to be used to create a ref.
+       - ***Not recommened to use as it can direcly manipulate the DOM. So, avoid `ref.current.value=something`. Even XSS can happen. Be careful.***
+             
+       eg:
+             
+      
+             const RefComponent = ()=>{
+               const iRef = useRef();
+             <input ref={iRef} onChange=()=>{console.log(iRef.current.value)}></input>// on change, the value in field will be printed in console.
+             }
+   
    
    
    
