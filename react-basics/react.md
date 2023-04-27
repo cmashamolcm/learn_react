@@ -268,6 +268,17 @@
    - *effect function gets triggered on mount and whenever dependencies changes*
    - *clean up function will get not triggered on mount. But after that, first cleanup happens and then effect executes.*
    - *on destroy or unmount of component, the cleanup function gets triggered. But not the actual effect.*
+   - useEffect(effect): gets triggered everytime
+   - useEffect(effect, []): get triggered only on mount
+   - useEffect(effect, [var1]): get triggered on mount and everytime when the value of var1 changes. (var1 will be state variable)  
+   - useEffect(effect, [props.var1]): on mount and whenever props.var1 coming from parent changes
+            
+Note: **Only when a props or state variable changes, re-render happens. So, if we have dependency to a local variable, on re-render, this var will get re-created. So, useEffect will not get triggered even if we change its value.**       
+      ***The variable should be in props or in state to get preserved. If its preserved, we can identify the changes and trigger useEffect***
+      
+      ***useEffect invoked after render/ re-render (didMount/ didUpdate). Flow: render/ re-render->useEffect.  Not called on willUnmount***  
+      ***useEffect cleanup not called on didMount. Called before effect on didUpdate. Gets called on willUnmount***
+            
    
 ```
     syntax:
@@ -284,6 +295,8 @@
             
   - When to use useEffect?
     - Whenever we need to interact with outside of React.
+    - Whenever we want to do something beyond just rendering
+            
     - Eg:
             
        * HTTP call
