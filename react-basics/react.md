@@ -275,10 +275,10 @@
             
 Note: **Only when a props or state variable changes, re-render happens. So, if we have dependency to a local variable, on re-render, this var will get re-created. So, useEffect will not get triggered even if we change its value.**       
       ***The variable should be in props or in state to get preserved. If its preserved, we can identify the changes and trigger useEffect***
-      
-      ***useEffect invoked after render/ re-render (didMount/ didUpdate). Flow: render/ re-render->useEffect.  Not called on willUnmount***  
+      ***useEffect invoked after render/ re-render (didMount/ didUpdate). Flow: render/ re-render->useEffect.  Effect Not called on willUnmount, but cleanup gets called.***  
       ***useEffect cleanup not called on didMount. Called before effect on didUpdate. Gets called on willUnmount***
-            
+      
+            `In effect, ueEffect get triggered on mount, unmount, update/ re-render. But on mount, triggers effect. On unmount triggers cleanup.`
    
 ```
     syntax:
