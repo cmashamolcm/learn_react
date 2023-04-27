@@ -283,13 +283,14 @@
 ```
             
   - When to use useEffect?
-        - Whenever we need to interact with outside of React.
-        - Eg:
-           * HTTP call
-           * Local storage or any other browser API calls
-           * websocket calls
-           * Key stroke based state variable validation (eg: state variable email id validate on every state change)
-           * Do some action in child based on props value coming from parent. (parent selects currency. Child has to make API call based on currencies list property on re-render. Some samples: https://dev.to/colocodes/6-use-cases-of-the-useeffect-reactjs-hook-282o)
+    - Whenever we need to interact with outside of React.
+    - Eg:
+            
+       * HTTP call
+       * Local storage or any other browser API calls
+       * websocket calls
+       * Key stroke based state variable validation (eg: state variable email id validate on every state change)
+       * Do some action in child based on props value coming from parent. (parent selects currency. Child has to make API call based on currencies list property on re-render. Some samples: https://dev.to/colocodes/6-use-cases-of-the-useeffect-reactjs-hook-282o)
             
    
    
