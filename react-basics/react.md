@@ -290,7 +290,13 @@
        * Local storage or any other browser API calls
        * websocket calls
        * Key stroke based state variable validation (eg: state variable email id validate on every state change)
-       * Do some action in child based on props value coming from parent. (parent selects currency. Child has to make API call based on currencies list property on re-render. Some samples: https://dev.to/colocodes/6-use-cases-of-the-useeffect-reactjs-hook-282o)
+       * Do some action in child based on props value coming from parent. (parent selects currency. Child has to make API call based on currencies list property on re-render. 
+       - *Advantage of using a prop variable (props.var1) as dependency helps us to trigger useEffect only when that particular props is changed. Not if any other props.var2 is changed.*
+            
+            
+`Note: when we change state of parent, parent and child gets re-redenred. Child is not getting re-created. So, props change can be identified. That is why [] and [props.var1] are different. Empty aray makes useEffect(0 trigger on create/ mount. [props.var1] will make child useEffect gets triggered only if props changed. If the parent has a conditional mount and unmount of child (eg: {someVar.length>3 && <Child var1=something/>}, whenever condition is false, child gets destroyed and on true, new child gets created. So, useEffect triggers on mount irrespective of pro.var1 in such cases.) `
+            
+Some samples: https://dev.to/colocodes/6-use-cases-of-the-useeffect-reactjs-hook-282o)
             
    
    
