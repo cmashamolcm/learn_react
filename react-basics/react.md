@@ -259,9 +259,38 @@
              <input ref={iRef} onChange=()=>{console.log(iRef.current.value)}></input>// on change, the value in field will be printed in console.
              }
    
+19. useEffect:
+            
+   - A React hook that helps us to do some actions after a render.
+   - Equivalent to componentDidMount, componentWillUnmount, componentDidUpdate etc.
+   - It can take an action (effect), array of dependencies based on which this effect is to be triggered
+   - The effect function can have a function as return. This will be clean up function.
+   - *effect function gets triggered on mount and whenever dependencies changes*
+   - *clean up function will get not triggered on mount. But after that, first cleanup happens and then effect executes.*
+   - *on destroy or unmount of component, the cleanup function gets triggered. But not the actual effect.*
    
-   
-   
+```
+    syntax:
+            useEffect(effect function, [dependencies]);
+    syntax of effect function with cleanup:
+            useEffect(()=>{
+            ...do something;
+            return ()=>{
+            //cleanup action
+            };
+            }, [dependencies]);
+            
+```
+            
+  - When to use useEffect?
+        - Whenever we need to interact with outside of React.
+        - Eg:
+           * HTTP call
+           * Local storage or any other browser API calls
+           * websocket calls
+           * Key stroke based state variable validation (eg: state variable email id validate on every state change)
+           * Do some action in child based on props value coming from parent. (parent selects currency. Child has to make API call based on currencies list property on re-render. Some samples: https://dev.to/colocodes/6-use-cases-of-the-useeffect-reactjs-hook-282o)
+            
    
    
    
