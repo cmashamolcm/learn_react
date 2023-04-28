@@ -311,6 +311,15 @@ Note: **Only when a props or state variable changes, re-render happens. So, if w
             
 Some samples: https://dev.to/colocodes/6-use-cases-of-the-useeffect-reactjs-hook-282o)
             
-   
+20. useReducer:
+ 
+   - Hook to deal with state
+   - This one is used by `useState` under the hood. So, in effect, everything with state management is useReducer.
+   - Why we need to use useReducer if there is already useState is there?
+         - Use it when useState cannot handle things well. Overall, useState is a wrapper on useReducer.
+   - When to use useReducer?
+            - There are so many states to manage and due to which many number of re-renders happens unncessarily.
+            - When the state 
+            
    
    
