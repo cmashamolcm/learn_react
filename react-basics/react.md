@@ -345,7 +345,7 @@ Some samples: https://dev.to/colocodes/6-use-cases-of-the-useeffect-reactjs-hook
             There is not `setReduce` in class components but setState with prevState callback is the only rescue. But when comes to functional
             component, useReducer makes our life easy with despatcher already capable of to call reducer.
    
-            ```
+```
                Note: 
                   const [x, setX] = useState('');
                   const [y, despatchY] = useReducer(reducer, '');
@@ -359,5 +359,10 @@ Some samples: https://dev.to/colocodes/6-use-cases-of-the-useeffect-reactjs-hook
             * Note that
             setState in class components has a callback to execute immediately after state change happens asynchrounously. But setter or despatcher does not accept callback function when we use useState or useReducer in functional components. Here, we have to use useEffect depending on state variable as a replacement for callback.
             
-            ```
-   
+```
+   https://www.robinwieruch.de/react-usereducer-vs-usestate/
+   https://dev.to/m0nm/usestate-vs-usereducer-what-are-they-and-when-to-use-them-2c5c
+   https://www.youtube.com/watch?v=DmxzHJ3lq6U - example with animation
+      
+           
+21.
