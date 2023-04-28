@@ -307,7 +307,17 @@ Note: **Only when a props or state variable changes, re-render happens. So, if w
        - *Advantage of using a prop variable (props.var1) as dependency helps us to trigger useEffect only when that particular props is changed. Not if any other props.var2 is changed.*
             
             
-`Note: when we change state of parent, parent and child gets re-redenred. Child is not getting re-created. So, props change can be identified. That is why [] and [props.var1] are different. Empty aray makes useEffect(0 trigger on create/ mount. [props.var1] will make child useEffect gets triggered only if props changed. If the parent has a conditional mount and unmount of child (eg: {someVar.length>3 && <Child var1=something/>}, whenever condition is false, child gets destroyed and on true, new child gets created. So, useEffect triggers on mount irrespective of pro.var1 in such cases.) `
+```
+Note: when we change state of parent, parent and child gets re-redenred. Child is not getting re-created. So, props change can be identified. That is why [] and [props.var1] are different. 
+            
+Empty aray makes useEffect() trigger on create/ mount. [props.var1] will make child useEffect gets triggered only if props changed. 
+            
+If the parent has a conditional mount and unmount of child (eg: {someVar.length>3 && <Child var1=something/>}, whenever condition is false, child gets destroyed and on true, new child gets created. So, useEffect triggers on mount irrespective of pro.var1 in such cases.) 
+  
+What will happens if we add depency without array.
+            useEffect(()=>{//do something}, a, b);
+            Here, only first time it gets triggered. But after that no. This is same as  useEffect(()=>{//do something}, []); which is once in life time.  useEffect(()=>{//do something}); always gets triggered after each re-render.
+```
             
 Some samples: https://dev.to/colocodes/6-use-cases-of-the-useeffect-reactjs-hook-282o)
             
@@ -318,8 +328,36 @@ Some samples: https://dev.to/colocodes/6-use-cases-of-the-useeffect-reactjs-hook
    - Why we need to use useReducer if there is already useState is there?
          - Use it when useState cannot handle things well. Overall, useState is a wrapper on useReducer.
    - When to use useReducer?
-            - There are so many states to manage and due to which many number of re-renders happens unncessarily.
-            - When the state 
+            - There are so many states to manage and due to which many number of re-renders happens unncessarily. Reducers helps to group all states together and then re-render count gets reduced.
+            - When there are many state, we make into complex object. So, if there is a state holding complex object, its good candidate for useReducer.
             
+   - It is an obvious question that why can't we use `useState(call back with prev state)` instead of reducer.
+            That is ok.
+            But if we want to perform some transformation, with every setter usage, we have to repeat the reducer logic.
+            useReducer is giving a ready made solution here.
+            We just defines the reducer and simply with despacher, we can just send action object and react wll take care of the rest.
+            Refer https://docs.google.com/document/d/1NXd2OWsbvku1-V5hLAWOLRmQducxlctOsOkvmOS1Ebk/edit to find the code...how with setState, we             have to add many boiler plate code everytime and reducer makes it much easier.
+            
+   - Then, what would be reason that `setState((prevState)=>{return newState})` got introduced?
+            Its actually to have something equivalent to update state with respect to previous state in setState() of class based components.
+            But when we got functional components, useReducer came in v16.8 to manage complex states with less boiler plate code to have    
+            reducer and then despatcher and inside despatcher, call setter etc.            
+            There is not `setReduce` in class components but setState with prevState callback is the only rescue. But when comes to functional
+            component, useReducer makes our life easy with despatcher already capable of to call reducer.
    
+            ```
+               Note: 
+                  const [x, setX] = useState('');
+                  const [y, despatchY] = useReducer(reducer, '');
+            Here, setX and despatchY are created once and in re-redner, they will not get changed ever. So, in a child, if we add them as dependecy for useEffect, its meaningless as until a re-mount happens, this functions will never change. So, if we want to use setter on useEffect of child, better to call it in another function in parent and pass that function to child as a props and add it as dependency in useEffect.
+            
+            Refer note in ReducerLogin.js useEffect.
+            
+            Setter function associated/ created with useState, useReducer hooks will not change for the entire life of component. But if we have a local variable or function inside our component, it gets re-created on every re-render. So, using that in useEffect matters.
+            
+            
+            * Note that
+            setState in class components has a callback to execute immediately after state change happens asynchrounously. But setter or despatcher does not accept callback function when we use useState or useReducer in functional components. Here, we have to use useEffect depending on state variable as a replacement for callback.
+            
+            ```
    
