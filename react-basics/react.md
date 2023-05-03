@@ -486,3 +486,4 @@ Some samples: https://dev.to/colocodes/6-use-cases-of-the-useeffect-reactjs-hook
    - Using refs exposes the child and hence encapuslation is lost for child. It leads to unpredictable nature. We as behavior of child will couple with parent.
    - Also, it can be confusing to other developers in terms of maintainability, debugging, testing(difficult to set test data with ref and assert)
    - That is why, we have to use refs carefully.
+   - But if we use wisely, it improves performance.
