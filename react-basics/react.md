@@ -369,6 +369,7 @@ Some samples: https://dev.to/colocodes/6-use-cases-of-the-useeffect-reactjs-hook
        - Context:
             - Context is a place to store shared state variables or functions so that without forwarding it way too far via props.
             - This helps to avoid keeping states used by different children in top parent and passing it to deeper children. At times, the intermediate components might not even bother about this props and it feeds the same blindly to its own child. So, for that component, this property is even not relevant. So, if there is a common storage for such shared states, those components whoever need it can subscribe and use it. That is the concept of context.
+            - But context is not good solution when frequent updates to state variables are there and Redux is betetr then.
             - How to use context?
             - 2 ways are there.
                - With React.createContext() and then with provider and consumer (mostly best in case of class components)
@@ -487,3 +488,4 @@ Some samples: https://dev.to/colocodes/6-use-cases-of-the-useeffect-reactjs-hook
    - Also, it can be confusing to other developers in terms of maintainability, debugging, testing(difficult to set test data with ref and assert)
    - That is why, we have to use refs carefully.
    - But if we use wisely, it improves performance.
+   ***Most of the time, with props and useEffect itself, we can tackle situations and avoid imeretive handle to be in line with declarative approach of react*
