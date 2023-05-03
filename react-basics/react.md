@@ -365,4 +365,107 @@ Some samples: https://dev.to/colocodes/6-use-cases-of-the-useeffect-reactjs-hook
    https://www.youtube.com/watch?v=DmxzHJ3lq6U - example with animation
       
            
-21.
+21. useContext:
+       - Context:
+            - Context is a place to store shared state variables or functions so that without forwarding it way too far via props.
+            - This helps to avoid keeping states used by different children in top parent and passing it to deeper children. At times, the intermediate components might not even bother about this props and it feeds the same blindly to its own child. So, for that component, this property is even not relevant. So, if there is a common storage for such shared states, those components whoever need it can subscribe and use it. That is the concept of context.
+            - How to use context?
+            - 2 ways are there.
+               - With React.createContext() and then with provider and consumer (mostly best in case of class components)
+               - With React.createContext() and then provider to pus data, `useContext()` to consume state values.
+            - Sample with Provider and Consumer:
+ 
+ ```
+            auth-context.js
+            ---------------
+            const AuthContext = React.createContext({// json as default value and just for structure.
+                           isLoggedIn: false, 
+                           onLogIn:()=>{}
+                     });
+            export default AuthContext;
+            
+            ProviderComponent.js
+            -----------------------
+            const ProviderComponent = ()=>{
+            const [isLoggedIn, setLoggedIn] = useState();
+            return <AuthContext.Provider value={isLoggedIn: isLoggedIn, onLogIn:()=>{console.log('Logging in...!');}}>
+                        <ConsumerComponent/>
+                   </AuthContext.Provider>
+            
+            }
+            export default ProviderComponent;
+            
+            
+            ConsumerComponent.js
+            -----------------------
+            const ConsumerComponent = ()=>{
+            return <AuthContext.Consumer>
+            {(context)=>{return (// Inside Consumer, expects a function with context as param and JSX as return
+                  <>
+                     {context.isLoggedIn && <h1>Logging In</h1>}
+                     {!context.isLoggedIn && <h1>Logging Out</h1>
+                  </>
+                  })
+            }}
+            
+            </AuthContext.Consumer>
+            
+            }
+            export default ConsumerComponent;
+                     
+ ```
+         Sample with useContext:
+ ```
+            auth-context.js
+            ---------------
+            const AuthContext = React.createContext({// json as default value and just for structure.
+                           isLoggedIn: false, 
+                           onLogIn:()=>{}
+                     });
+            export default AuthContext;
+            
+            ProviderComponent.js
+            -----------------------
+            const ProviderComponent = ()=>{
+            const [isLoggedIn, setLoggedIn] = useState();
+            return <AuthContext.Provider value={isLoggedIn: isLoggedIn, onLogIn:()=>{console.log('Logging in...!');}}>
+                        <ConsumerComponent/>
+                   </AuthContext.Provider>
+            
+            }
+            export default ProviderComponent;
+            
+            
+            ConsumerComponent.js
+            -----------------------
+            const ConsumerComponent = ()=>{
+            const context = useContext(AuthContext);
+            return (
+                  <>
+                     {context.isLoggedIn && <h1>Logging In</h1>}
+                     {!context.isLoggedIn && <h1>Logging Out</h1>
+                  </>
+                  );
+            
+            }
+            export default ConsumerComponent;
+            
+            
+    Note: Refer index.js and auth-context.js in use-context project to get an idea on how we can make AuthContext.Provider into a separate component and use it instead of <AuthContext.Provider> every time in provider components.        
+ ```
+   
+  ***When to use context and when not to use?***
+   - Better not to use in base components such as cunstom button we make etc so that it is re-usable
+   - Btter to use when lengthy forwarding of state as propertieshappens from parent to far away children
+   
+  Note:
+   - Is it important to specify the default values in React.createContext()?
+      * No. But if we provide that, IDE can provider proper suggestions on `context.`
+   - When we do a useContext() or AppContext.Consumer, React looks for nearest provider of that type. May be from just above paranet or from ancestors in hierarchy.
+   - Warning comes when we are not ging values while wrapping provider component with `<AppContext.Provider>`.
+   - If value attribute is not provided, error comes in consumer side as `content is udenfined and cannot read props of undefined`
+   - If we miss out one prop in value json, its ok to create context, but error comes(undefined comes in case of variables) when we try to use that props from context value json
+   - Even if we define some default value for a json props, it will not be taken as new json without the props is used to create context.
+   `React.createContext(isLoggedIn: false);`
+   Now, in `<AppContext.Provider value={isLoggedOut: true}>` means that isLoggedIn is undefined and the context has json with key isLoggedOut.
+         
