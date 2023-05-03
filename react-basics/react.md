@@ -469,3 +469,20 @@ Some samples: https://dev.to/colocodes/6-use-cases-of-the-useeffect-reactjs-hook
    `React.createContext(isLoggedIn: false);`
    Now, in `<AppContext.Provider value={isLoggedOut: true}>` means that isLoggedIn is undefined and the context has json with key isLoggedOut.
          
+22. Rules to follow while using a hook:
+   `1. Always use hoos inside a functional component`
+   `2. Use hook only at the top level of functional component. Not insiude some random function or callback of another hook etc.`
+   
+23. React.forwardRef() function and useImerativeHandle() hook:
+   - This is to expose the child properties and functions to parent component.
+   - Wrap child with React.forwardRef() to enable to accept ref similar to props.
+   - Use useImperativeHandle() to attach properties or fuctions of child to the ref came from parent.
+   - Refer Input.js and Login.js in use-context project for sample.
+   - At the max times, without ref and impertaive approach, we can make things work. Making child focus, scroll etc, this helps.
+   - Why is exposing a ref good? 
+   When we write some component libraries or reusable components, refs exposes teh possibility to access direct DOM element so that in some rare situations, other develpers might need that. Usually, ForwardRef and useImerativeHandle are used together to make clean, testable, high performing(re-renders only child instead of parent etc when needed.)
+   
+   - If we use refs a lot, it can be a performance problem also. The reason is, whenever a chnage to ref happens in actual DOM, a re-render occurs. This is valid in case of states and props as well.
+   - Using refs exposes the child and hence encapuslation is lost for child. It leads to unpredictable nature. We as behavior of child will couple with parent.
+   - Also, it can be confusing to other developers in terms of maintainability, debugging, testing(difficult to set test data with ref and assert)
+   - That is why, we have to use refs carefully.
