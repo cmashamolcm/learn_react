@@ -541,3 +541,21 @@ Some samples: https://dev.to/colocodes/6-use-cases-of-the-useeffect-reactjs-hook
    
  ```
    
+ - `useCallback` helps a component to memoise functions. What to do to remember variables?
+   `useMemo` is the solution. If we wrap our variables with useMemo(), it will be protected from re-creation on re-render.
+   Eg:
+   ```
+      const memoVar = useMemo()=>{return [1, 2, 3, 4], [dependencies...]};
+      // Now, memoVar will get re-created only when dependencies changes. It helps in situations like a big array is passed every time to child and child is React.memo. So that the props chnages only when dependencies in useMemo() of parent changes. Refer DemoLIst.js in react-internals project for sample.
+   ```
+   
+   **Notes:**
+   
+   ```
+   - If we are not setting dependency array for useEffect(), useMemo(), useCallback(), whatever inside it just acts like normal functions.
+   - If [] makes them activate one time
+   - useMemo() is not used so much but useCallback is very much in use.
+   - Whenever we use React.memo(), intention is to avoid re-render. But it comes will a cost as it has to verify each of the props to check everytime to decide on re-render or not. So, use it only when necessary. 
+   - Avoid React.memo() if the component props chnages very frequently.
+   - Better to use it to wrap pure function components. **Pure means always returns same output for same input**
+   ```
