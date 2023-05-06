@@ -496,5 +496,48 @@ Some samples: https://dev.to/colocodes/6-use-cases-of-the-useeffect-reactjs-hook
         * reactDOM - interacts with realDOM. It compares the previous and current snapshot of virutalDOM and then updates the reactDOM with only the difference so that the changes are visible in web UI.
    - Whenever a component is re-evaluated, its child components also get evaluated irrespective of the properties, state or context values changes for child.
    
-   ***Then this leads to re-evaludation of components which are not even having any chnage. That too is unnecessary burden. How can we prevent it?***
+   ***Then this leads to re-evaludation of components which are not even having any change. That too is unnecessary burden. How can we prevent it?***
+   Sulution is,
+   **React.memo(component)**
+   - When we wrap a component with React.useMemo(), that component will get re-evaluated due to re-evaluation of parent only if it's props changes (or own state changes)
+   ```
+   const MemoParagraph = (props) => {
+      console.log("Re-evaluated MEMO PARAGRAPH");
+      return (
+         <div>
+            {props.toggleParagraph && <p>Momorized paragraph from child component</p>}
+            <button onClick={props.toggle}>Toggle Memo</button>
+         </div>
+      );
+   };
+
+   export default React.memo(MemoParagraph);
+   // When in parent of it, toggleParagraph changes or toggle chnages, this re-evaluated.
+   ```
+   But most of the time, whatever we pass to a child will be a funcion or an object and if it's not a state function, on each re-evaluation of parent, it gets re-created. So, this child also gets re-evaluated and Memo become powerless.
+   
+   ***Then how can we make a function (state despachers are already singleton) of parent not to be re-created on every re-evaluation of parent?***
+ `The soultion is useCallback() hook`.
+ - If we wrap a function inside useCAllback() hook, it will not get re-created until it's dependencies changes.
+ - Structure is similar to useEffect.
+   
+ ```
+   const myFunction = useCallback(()=>{//do something}, []);
+   // If we are not giving depencies array, it has no effect and acts as normal function which gets re-created
+   // If [], only once it will get defined and never changes afterwards.
+   // This can lead to a problem due to the JS closure. So, if we add a dependency, whenever that chnages, re-creation of function happens with the re-evaluation and hence will be fine.
+   
+   const Parent = ()=>{
+   
+   const [toggle, setToggle] = useState(false);
+   //const myFunction = useCallback(()=>{if(toggle){//do something}}, []);// here, if we change toggle by clicking button also, toggle will be false inside myFunction. Child will never get re-evaluated and re-rendered in virualDOM.
+   const myFunction = useCallback(()=>{if(toggle){//do something}}, [toggle]);// here, whenever a button click happens, myFunction is created new and hence Child also will get re-evaluated and re-rendered in virtualDOM. Then if inside child something chnages, it gest applied to reaclDOM by reactDOM lib.
+   
+   return (<div>
+            <Child onChange = {myFunction}/>
+            <button onClick={()=>{setToggle(!toggle)}}>test</button>
+          </div>);
+   }
+   
+ ```
    
