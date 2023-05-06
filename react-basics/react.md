@@ -559,3 +559,7 @@ Some samples: https://dev.to/colocodes/6-use-cases-of-the-useeffect-reactjs-hook
    - Avoid React.memo() if the component props chnages very frequently.
    - Better to use it to wrap pure function components. **Pure means always returns same output for same input**
    ```
+   
+   `State updates in sync will be processed by react in a batch. Those in nearby lines but async will be processed separate. Refer App.js of react-internals project for sample code.`
+   
+   `State updates for same state variable will be added to a scheduler queue and processed by react. So, if state change depends on previous state, betetr to use setState((prevState)=>{// update state logic})`
