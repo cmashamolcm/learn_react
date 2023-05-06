@@ -489,3 +489,9 @@ Some samples: https://dev.to/colocodes/6-use-cases-of-the-useeffect-reactjs-hook
    - That is why, we have to use refs carefully.
    - But if we use wisely, it improves performance.
    ***Most of the time, with props and useEffect itself, we can tackle situations and avoid imeretive handle to be in line with declarative approach of react*
+   
+24. React Internals:
+   - React has two main libraries
+        * react -  takes care of react components and its re-evaluation based on state, props or context changes. It updates the virtualDOM whenever a change occurs in re-evaluation
+        * reactDOM - interacts with realDOM. It compares the previous and current snapshot of virutalDOM and then updates the reactDOM with only the difference so that chnages are visible in web UI.
+   - 
