@@ -493,5 +493,8 @@ Some samples: https://dev.to/colocodes/6-use-cases-of-the-useeffect-reactjs-hook
 24. React Internals:
    - React has two main libraries
         * react -  takes care of react components and its re-evaluation based on state, props or context changes. It updates the virtualDOM whenever a change occurs in re-evaluation
-        * reactDOM - interacts with realDOM. It compares the previous and current snapshot of virutalDOM and then updates the reactDOM with only the difference so that chnages are visible in web UI.
-   - 
+        * reactDOM - interacts with realDOM. It compares the previous and current snapshot of virutalDOM and then updates the reactDOM with only the difference so that the changes are visible in web UI.
+   - Whenever a component is re-evaluated, its child components also get evaluated irrespective of the properties, state or context values changes for child.
+   
+   ***Then this leads to re-evaludation of components which are not even having any chnage. That too is unnecessary burden. How can we prevent it?***
+   
