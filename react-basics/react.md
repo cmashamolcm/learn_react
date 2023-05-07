@@ -583,3 +583,8 @@ Some samples: https://dev.to/colocodes/6-use-cases-of-the-useeffect-reactjs-hook
          - Its re-usable since functional components has no states i built until we add one
          - Performance wise also its better as react does not have to bother much on states, lify cycles etc
          - Class components can use only one context at a time as `static contextType` variable accepts only one. But with functional, we can use useContext() and any number of contexts in one component.
+   
+26. How is error boundary works?
+   - This is one specific to class components. 
+   - It helps us to define a class that can wrap over our components so that any error coming from the children wrapped by it will be handled nicely and in a generic way.
+   - Uses `componentDidCatch(error)` in ErrorBoundary class and use it to wrap our components with it. Refer ErrorBoundary.js in class-components project.
