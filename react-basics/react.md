@@ -497,7 +497,7 @@ Some samples: https://dev.to/colocodes/6-use-cases-of-the-useeffect-reactjs-hook
    - Whenever a component is re-evaluated, its child components also get evaluated irrespective of the properties, state or context values changes for child.
    
    ***Then this leads to re-evaludation of components which are not even having any change. That too is unnecessary burden. How can we prevent it?***
-   Sulution is,
+   Solution is,
    **React.memo(component)**
    - When we wrap a component with React.useMemo(), that component will get re-evaluated due to re-evaluation of parent only if it's props changes (or own state changes)
    ```
@@ -563,3 +563,21 @@ Some samples: https://dev.to/colocodes/6-use-cases-of-the-useeffect-reactjs-hook
    `State updates in sync will be processed by react in a batch. Those in nearby lines but async will be processed separate. Refer App.js of react-internals project for sample code.`
    
    `State updates for same state variable will be added to a scheduler queue and processed by react. So, if state change depends on previous state, betetr to use setState((prevState)=>{// update state logic})`
+
+25. Class based components:
+   - Uses class concept from ES6
+   - These were the first famous approach before functional components become powerful with hooks from v16.8 of react
+   - Before that, to use state, we must use class components.
+   - Class has life cycle methods instead of hooks. 
+   - Eg: 
+      - componnetDidMount() = useEffect with [] empty array. Only once executed
+      - componentWillUnmount() = useEffect with cleanup
+      - componentDidUpdate() = useEffect with [depedencies] so that whenever a re-render happens, this gets triggered.
+   - But nowadays functional components are preferred unless
+         - existing project follows class based approach
+         - we need Error boundaries with componetDidCatch() since in functional components, there is nothing equivalent of it till now.
+   - Why is functional components are prefeered?
+         - Its lean and simple with the help of hooks and no need to keep in mind of life cycle methods
+         - Its re-usable since functional components has no states i built until we add one
+         - Performance wise also its better as react does not have to bother much on states, lify cycles etc
+         - Class components can use only one context at a time as `static contextType` variable accepts only one. But with functional, we can use useContext() and any number of contexts in one component.
