@@ -574,9 +574,11 @@ Some samples: https://dev.to/colocodes/6-use-cases-of-the-useeffect-reactjs-hook
       - componentWillUnmount() = useEffect with cleanup
       - componentDidUpdate() = useEffect with [depedencies] so that whenever a re-render happens, this gets triggered.
    - But nowadays functional components are preferred unless
+   
          - existing project follows class based approach
          - we need Error boundaries with componetDidCatch() since in functional components, there is nothing equivalent of it till now.
    - Why is functional components are prefeered?
+   
          - Its lean and simple with the help of hooks and no need to keep in mind of life cycle methods
          - Its re-usable since functional components has no states i built until we add one
          - Performance wise also its better as react does not have to bother much on states, lify cycles etc
