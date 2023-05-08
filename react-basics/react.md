@@ -588,3 +588,30 @@ Some samples: https://dev.to/colocodes/6-use-cases-of-the-useeffect-reactjs-hook
    - This is one specific to class components. 
    - It helps us to define a class that can wrap over our components so that any error coming from the children wrapped by it will be handled nicely and in a generic way.
    - Uses `componentDidCatch(error)` in ErrorBoundary class and use it to wrap our components with it. Refer ErrorBoundary.js in class-components project.
+
+ 27. HTTP calls:
+   - Any webapp cannot directly interact with db and an intermediate server will be there. This is because, 1 - its very complex to do it from UI, 2 - Its not safe to expose database to a UI to attract intruders
+   - We use `fetch` built-in browser method/ API to connect to backend via http
+   - fetch returns a promise and use `async-await` or `then().catch().finally` to deal with it.
+   - fetch returns a promise holding the response JSON and convert it to object using `response.json()`. Do `await response.json()` if it's in async-await.
+   - We can use useEffect() as http calls are side effects. Wrap the caller method in useCallback() if we need to add as dependency to useEffect().
+   - Eg:
+```
+   GET:
+   const getMovies = ()=>{
+      const movies = fetch("url").then(response=>{if(!response.ok){throw Error('Something went wrong');}
+                        return response.json();})
+                     .then(dataList=>dataList.map(data=>{return {title: data.title, director: data.directorName};})).catch(error){// if any error. Usually 4xx or 5xx will not come here but netwrok issues can come here. 4xx/ 5xx treats as valid response.}
+   setMovies(movies);// set state to re-render the page
+   }
+```
+   
+```
+   POST:
+   const postMovie = (movie)=>{
+      const result = fetch("url", {method: 'POST', body: JSON.stringify(movie), headers: {'Content-Type': 'application/json'}})
+                     .then(response=>{if(!response.ok){throw Error('Something went wrong');}
+                        return response.json();})
+                     .catch(error){// if any error. Usually 4xx or 5xx will not come here but netwrok issues can come here. 4xx/ 5xx treats as valid response.}
+   }
+```
