@@ -359,6 +359,9 @@ Some samples: https://dev.to/colocodes/6-use-cases-of-the-useeffect-reactjs-hook
             * Note that
             setState in class components has a callback to execute immediately after state change happens asynchrounously. But setter or despatcher does not accept callback function when we use useState or useReducer in functional components. Here, we have to use useEffect depending on state variable as a replacement for callback.
             
+            * Note: One advantage of reducer is, we will have a common place to update different states in same component. So, we can pass the same to children. If it was with useState, we have to pass each settter of each state variable.
+            * There is not significant performance advantage for reducer over useState as setStates in sync are processed anyways in batch. So, no: re-renders will be optimized. `setA(1); setB(2); in same function without async will be processed togethe under the hood and only one re-render happens.`
+            
 ```
    https://www.robinwieruch.de/react-usereducer-vs-usestate/
    https://dev.to/m0nm/usestate-vs-usereducer-what-are-they-and-when-to-use-them-2c5c
@@ -563,6 +566,8 @@ Some samples: https://dev.to/colocodes/6-use-cases-of-the-useeffect-reactjs-hook
    `State updates in sync will be processed by react in a batch. Those in nearby lines but async will be processed separate. Refer App.js of react-internals project for sample code.`
    
    `State updates for same state variable will be added to a scheduler queue and processed by react. So, if state change depends on previous state, betetr to use setState((prevState)=>{// update state logic})`
+   
+   **If batch updates of state happens, how is reducer then better in terms of performace? There is no significant performance benefit for reducer as setState in sync is done i batch. But code will be more organized, clean, scalable, easy to pass to single method to child components to update any number of states etc are benefits.**
 
 25. Class based components:
    - Uses class concept from ES6
