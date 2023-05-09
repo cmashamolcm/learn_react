@@ -360,8 +360,16 @@ Some samples: https://dev.to/colocodes/6-use-cases-of-the-useeffect-reactjs-hook
             setState in class components has a callback to execute immediately after state change happens asynchrounously. But setter or despatcher does not accept callback function when we use useState or useReducer in functional components. Here, we have to use useEffect depending on state variable as a replacement for callback.
             
             * Note: One advantage of reducer is, we will have a common place to update different states in same component. So, we can pass the same to children. If it was with useState, we have to pass each settter of each state variable.
-            * There is not significant performance advantage for reducer over useState as setStates in sync are processed anyways in batch. So, no: re-renders will be optimized. `setA(1); setB(2); in same function without async will be processed togethe under the hood and only one re-render happens.`
-            
+            * There is not significant performance advantage for reducer over useState as setStates in sync are processed anyways in batch. So, no: re-renders will be optimized. `setA(1); setB(2); in same function without async will be processed togethe under the hood and only one re-render happens.`    
+```
+What does **useReducer also lets you optimize performance for components that trigger deep updates because you can pass dispatch down instead of callbacks.** means?
+     - If we use individual states, multiple callbacks/ (state update functions) from parent t child as props if child need to update a state of parent.
+     - To avoid that, we can club states together and make a complex json. But then the single callback function to update the state (similar to reducer) will be big and have ot pass to each child.
+     - Instead, if we use reducer, the complexity is still in reducer which lies in parent component.  Despatcher is a light weight function. If we pass a despatcher from parent that updates something in a complex state, child doesn not have to carry the complexity of reducer but state of parent can be easily changed.
+This helps to improve overall performance as the child can have be light weight.             
+           
+```            
+          
 ```
    https://www.robinwieruch.de/react-usereducer-vs-usestate/
    https://dev.to/m0nm/usestate-vs-usereducer-what-are-they-and-when-to-use-them-2c5c
