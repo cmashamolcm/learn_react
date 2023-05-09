@@ -5,3 +5,8 @@
    - A custom hook is a function strating with `use` and that can call another hooks in it.
    - One best usecase is writing a hook to handle http fetch.
    - Refer 'custom-hook-http' for sample code.
+
+29. Forms:
+   - We can use custom hooks to club validations for a form
+   - Value and validation of each input can be treated as a single reducer.
+30.
