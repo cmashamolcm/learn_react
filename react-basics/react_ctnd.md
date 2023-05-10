@@ -37,3 +37,5 @@
    - How to update the store:
    `store.dispatch(action object with type prop specified)`// this will trigger execution of reducer and hence store gest updated. Then all subscribers will get notified.
    - *The only way to update store is strictly through dispatcher and no component can directly update store.*
+   - `Redux can be used with any JS. It's not specific to React`
+   - 
