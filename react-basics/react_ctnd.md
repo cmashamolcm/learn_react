@@ -38,4 +38,15 @@
    `store.dispatch(action object with type prop specified)`// this will trigger execution of reducer and hence store gest updated. Then all subscribers will get notified.
    - *The only way to update store is strictly through dispatcher and no component can directly update store.*
    - `Redux can be used with any JS. It's not specific to React`
-   - 
+
+  - *How to use Redux with react?*
+      - Two libraries to install:
+         * redux - has createStore(reducer), store.dispatch(action), store.subscribe(consumer function) etc. 
+         * react-redux - has `<Provider store={our store function}>`, useSelector(state=>{items from state}), dispatch = useDispatch()
+      - Steps:
+         * define reducer, store in store/index.js and export.
+         * Add `<Provider store={store}>our components</Provider>` to a component which will be top component after which we need store.
+         * In our component, useSelector(), useDispatch() to get store states and dispatch actions respectively.
+         * In class class components, Till wrapping with of provider, its the same.
+         * But after that, in subscriber component, wrap that with response from connect() function from `react-redux`. connect(propsFromState, propsFromDispatch)(our component);
+         * In dispatcher, we can send action type and any payload data as well.
