@@ -50,3 +50,38 @@
          * In class class components, Till wrapping with of provider, its the same.
          * But after that, in subscriber component, wrap that with response from connect() function from `react-redux`. connect(propsFromState, propsFromDispatch)(our component);
          * In dispatcher, we can send action type and any payload data as well.
+
+  - *Better way to integrate Redux in React*
+      - Why need a better way?
+         * We have to add many conditions in reducer to accomodate different data in store
+         * Based on different scenarios, we have to manage many action type also. In a team environment, if so many action types comes, it can be duplicates, confusions etc. To an extend, with constants/ enum as action type, we can manage. But its not a good solution. (Something with ctrl+space makes our life easier and less to keep reminded.)
+      - The solution is, a library called **@reduxjs/toolkit**
+      - This contains 'redux' as dependency in it. We don't have to explictly install 'redux(v4.x)'. But **Don't forget to add 'react-redux(v8.x)'**
+      - `@reduxjs/toolkit is using a librray called "immer" that can mutate state safely even if we do state.counter++ instead of setState(prevState.counter+1)`
+      - How to use it?
+         * Create reducer slice: 
+            Instead of single reducer for store, we will be make a slice of reducer.
+           `const slice1 = createSlice({
+            name: 'reducer name',
+            initialState: {state values as json},
+            reducers: {action1: (state)=>{state mutation}, action2: (state)=>{state mutation}}// map that is equivalent to each if else if in old reducer. (action type based). Here, state mutation is handled well by immer. So, direct update on state object is ok.
+           })`
+         * Now,
+           Create store using these slices
+           `const store = configureStore({reducer: slice1.reducer})` if we have only one reducer. What if we have multiple such slices
+           `const store = configureStore({
+                           reducer:{
+                              key1: slice1.reducer,
+                              key2: slice2.reducer,//...and so on
+                           }})`
+         * Now, we need to gets the actions so that components can submit data to store.
+           `export const actionsOfSlice1 = slice1.actions;`
+           Now this actions can be imported to any component and we will be asble to use it just by .ctr+ space.
+           The names of actions will be same as the names we gave as keys in reducers map inside slice.
+           These are not actually direcly the function we gave as reducer. But its another function which will call our reducers we specified in slice
+           with type = 'name of slice/key of reducer'.
+           Eg: `actionsOfSlice1.action1() will invoke the real reducer with payload we give and type=slice1/action1`
+         * In consumer side, `const dispatch = useDispatch()` and `const storeData = useSelector((state)=>return {values from state})` will be the same.
+         * Only difference is, if we have multiple reducer slices,
+           `to get state data of one slice, we have to call state.reducerKey.var`. reducerKey here is the key in map of reducer in configureStore. Ie; 
+           something like `state.key1.variable`
