@@ -64,7 +64,7 @@
            `const slice1 = createSlice({
             name: 'reducer name',
             initialState: {state values as json},
-            reducers: {action1: (state)=>{state mutation}, action2: (state)=>{state mutation}}// map that is equivalent to each if else if in old reducer. (action type based). Here, state mutation is handled well by immer. So, direct update on state object is ok.
+            reducers: {action1: (state)=>{state mutation}, action2: (state, action)=>{state mutation with the help of action.payload}}// map that is equivalent to each if else if in old reducer. (action type based). Here, state mutation is handled well by immer. So, direct update on state object is ok.
            })`
          * Now,
            Create store using these slices
@@ -85,3 +85,7 @@
          * Only difference is, if we have multiple reducer slices,
            `to get state data of one slice, we have to call state.reducerKey.var`. reducerKey here is the key in map of reducer in configureStore. Ie; 
            something like `state.key1.variable`
+         * How to trigger deispatch actions?
+           `dispatch(slice1.action1())` if there is no data to update from outside
+            When we have to pass some value to the dispatcher as part of action, we can pass that as param.
+            `dispatch(slice1.action1(payload data));// In reducers, it will be available from 'action' parameter if any of each reducer function and use it as action.payload there.` 
