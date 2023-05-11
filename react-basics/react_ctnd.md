@@ -89,3 +89,6 @@
            `dispatch(slice1.action1())` if there is no data to update from outside
             When we have to pass some value to the dispatcher as part of action, we can pass that as param.
             `dispatch(slice1.action1(payload data));// In reducers, it will be available from 'action' parameter if any of each reducer function and use it as action.payload there.` 
+       - An application may have multiple stores even though it is not recommended.
+       - `If 2 stores are there and are attached to Providers and one is wrapped with other one, inner most store will be dominating. `
+       - `If 2 stores are provided to two different sibling components, each of the sibming will get it's own store and other will not get the non-provided one`
