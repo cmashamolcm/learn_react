@@ -92,3 +92,17 @@
        - An application may have multiple stores even though it is not recommended.
        - `If 2 stores are there and are attached to Providers and one is wrapped with other one, inner most store will be dominating. `
        - `If 2 stores are provided to two different sibling components, each of the sibming will get it's own store and other will not get the non-provided one`
+       - *But how can we perform or use effects/ async operations when some change happens to the state in a store?*
+       - `We cannot use effects/ async inside reducer functions.`
+       - `Store reducer functions are expected to be *Pure*, *Side effect free*, *Synchronous*`
+       - Then how can we use effects and async?
+            * There are 2 options
+               * Define effects and async function logic in individual components keep reducer lean just to update the state. (`Here code duplication is more an component will be fat`) [fat components]
+               * Define custom actions for reducer. (Here, reducer will be lean with only necessary logic. And componets also will be lean as custom actions takes away all complexity.) [fat actions]
+               * If we have `complex logic and there is no async or effects` on state change, keep things with reducers. (fat reducer)
+       - Custom Actions
+            * Normal functions that returns `a function accepting `dispatch``. 
+            * It can hold async functions but cannot hold hooks as hooks can be used inside another hook or functional component only.
+            * Export these custom actions
+            * Import it in component and use it as `dispatch(customAction(if any params we need to pass to update store state));`
+            * This will get executed after a state change happens for store if we call it insdei a useEffect of component.
