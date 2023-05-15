@@ -147,3 +147,8 @@
       This is the location where the children are going to get added and redered.
       
 ```
+
+   - Absolute vs Relative routes:
+      
+      * Starting with '/' is absolute path. this means, it begins after domain. protocol://domain/path. Here /path is absolute path.
+      * Without '/' means relative path. It adds "/" and then path to the just previous url. If we have '/domain/parentPath'  as parent route, then path="path" creates a route "/domain/paranetPath/path". If it was absolute, it would ahve been "/domain.path".
