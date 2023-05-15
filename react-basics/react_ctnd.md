@@ -151,4 +151,14 @@
    - Absolute vs Relative routes:
       
       * Starting with '/' is absolute path. this means, it begins after domain. protocol://domain/path. Here /path is absolute path.
-      * Without '/' means relative path. It adds "/" and then path to the just previous url. If we have '/domain/parentPath'  as parent route, then path="path" creates a route "/domain/paranetPath/path". If it was absolute, it would ahve been "/domain.path".
+      * Without '/' means relative path. It adds "/" and then path to the just previous url. If we have '/domain/parentPath'  as parent route, 
+        then path="path" creates a route "/domain/paranetPath/path". If it was absolute, it would ahve been "/domain.path".
+      * If we are trying to add parent path as `/parant` and in sub-routes, just adds `/child1`, `/child2` instead of `child1` and `child2`, error comes
+        stating that child routes should have path including parent path or otherwise give it as relative path without `/`. This is because, under a 
+        parant path, if the child has absolute path, it might be in wrong location as both child and parent are not related. When we give 
+        absolute pah (with `/`), it just gets appended to domain. Not to the previous path. Then giving it outside the parent is also same.
+      * When we do `<Link to={..}>Home</Link>` indicates that just go back to previous/ parent route. Eg: `localhost:3000/root/product/list` can go to 
+        `localhost:3000/root` if `/product/list` was an absolute path under parent `/root`.
+      * To make it go back just one segment back. Eg: to `localhost:3000/root/product`, we have to set a property for link as 
+        `<Link to={..} relative='path'>Home</Link>`// By default it is `relative='route'`. `relative='path'` will just remove the last segment (till last 
+        `/`) to get the new path. ***relative property as route means, go to parent route. path means, go to one segment up.***
