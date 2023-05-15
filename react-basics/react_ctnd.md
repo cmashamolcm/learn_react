@@ -106,3 +106,44 @@
             * Export these custom actions
             * Import it in component and use it as `dispatch(customAction(if any params we need to pass to update store state));`
             * This will get executed after a state change happens for store if we call it insdei a useEffect of component.
+31. **Routing:**
+   - Routing is process of binding a URL to a component
+   - `react-router-dom` is the library to use
+   - Multi-Page Routing vs Single Page Routing: MPA renders htmls in browser by making http call to the server. SPA does not go every time to backend. Instead, it creates pages in client side with JS.
+   - React router enables client-side routing.
+   - Step by step:
+```
+1. npm install react-router-dom
+2. Create router.
+         const router = createBrowserRouter([{path: '/', element: <Home/>}, {path: '/products', element: <Products/>}]);
+         Then add <RouterProvider router={router}/>
+         
+         // Instead of this way, more dclarative approach will be;
+         //const routerDefinition = createRoutesFromElement(
+         // <Route><Route path='/' element={<Home/>}></Route><Route path='products' element={<Products/>}/></Route>);
+         // const router = createBrowserRouter(routeDefinition);
+         // <RouteProvider router ={router}/>
+         
+3. Now, how to use this;
+      <Link to="/products">PRODUCTS</Link>// Replaces with <a href> but no reload happens and just in client side, page changes
+      <NavLink to="/" className={({isActive})=>{isActive?{color: 'red'}: styles.linkStyle}}>Home</NavaLink>// This helps us to appl some styles depending on if link is active or not. Here, makes the link red if current path is /.
+      Path is something coming after the somain name in URl. 'protocol://domain/path'
+      
+4. But how can we navigate programatically. Eg: on click of a button?
+      const navigate = useNavigate();// hook
+      navigate('/products');// path to navigate is specified.
+
+5. What if we want to pass some path parameters?
+      Define routes as {path: '/product/:productId', element: <ProductDetails/>}
+      Now, in ProductDetails component, 
+      const params = useParams();//hook
+      params.productId; will give the value. The key should be matching with path parameter name in route definition.
+6. How to add a component with Links available everywhere like Menu in header?
+      We can add children in route definition.
+      const router = createBrowserRouter([{path: '/', element: <MenuHeader/>, 
+                     children: [{path: '/home', element: <Home/>}, {path: '/products', element: <Products/>}]}]);
+      Now, to attach the children to common component, ManHeader here,
+      Inside MainHeader component add <Outlet/>.
+      This is the location where the children are going to get added and redered.
+      
+```
