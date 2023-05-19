@@ -189,9 +189,19 @@
       import EventPage, {loader as loaderFromEventsPage} from '../EventsPage';
       const router = createBrowserRouter([{path: '/events', element: <EventsPage/>, loader: loaderFromEventsPage, children: [...]}]);
       
-      Note: In child componets of EventPage element also, we can use useLoader() to get eventsList. But no where else. Not in other routes or child routes, 
+      Note: In child components of EventPage element also, we can use useLoader() to get eventsList. But no where else. Not in other routes or child routes, 
       we will not get the data. But a route points to a page component. Inside that, we might be using other components to create a UI. In such child 
       components, we can directly use useLoader(). But not in other page or sub-routes. Afterall, sub-routes are two independent components. 
       ```
-  -    
+      - *This loader can respond late too. Till loader finishes the async data fetch, the page will be waiting to render. Then how can we show the user 
+      that page is just loading?*
+      `The solution is useNavigation() hook. From any visible page while loading the route, const navigation = useNavigation() and then navigation.state if 
+      is 'loading', show <p>Loading...!</p>`. There is no point in using this hook inside the route which is taking time to load as it will be visible 
+      after loading completes. useNavigation() is actually keeping track of current navigation stack. Whenever we do a click on any link, it actually puts 
+      an entry to navigation stack. It tracks the navigation state as well. We can extract loading state from that to show message to user.
+      - **Using of browser in-built Response object as return of loader function:**
+      `This helps us to build/ or directly return response object from fetch API or create a new Response(body, {status: 200}) etc. 
+      so that it will get automatically parsed by react-router-dom.`
+      
+      
 
