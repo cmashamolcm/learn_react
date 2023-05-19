@@ -162,3 +162,4 @@
       * To make it go back just one segment back. Eg: to `localhost:3000/root/product`, we have to set a property for link as 
         `<Link to={..} relative='path'>Home</Link>`// By default it is `relative='route'`. `relative='path'` will just remove the last segment (till last 
         `/`) to get the new path. ***relative property as route means, go to parent route. path means, go to one segment up.***
+      * To set a route as home page or default index link, set index=true for that route. {index: true, elemnt: <MyHomePage/>, children: [...]}
