@@ -162,4 +162,36 @@
       * To make it go back just one segment back. Eg: to `localhost:3000/root/product`, we have to set a property for link as 
         `<Link to={..} relative='path'>Home</Link>`// By default it is `relative='route'`. `relative='path'` will just remove the last segment (till last 
         `/`) to get the new path. ***relative property as route means, go to parent route. path means, go to one segment up.***
-      * To set a route as home page or default index link, set index=true for that route. {index: true, elemnt: <MyHomePage/>, children: [...]}
+  
+  - To set a route as home page or default index link, set index=true for that route. {index: true, elemnt: <MyHomePage/>, children: [...]}
+  - ***Is there any way by which we can load/ fetch some data before the page gestting loaded by router?*
+      - Yes. That can be done by adding `loader` property for route definition. Keep the loader function in Page and export and map it to router as loader.
+      - Then in page, use hook `useLoaderData()` to get the data.
+      - Eg:
+      ```
+      EventPage.js:
+      -------------
+      const EventsPage = ()=>{
+      const eventData = useLoaderData();// This hook from 'react-router-dom'
+      return <EventsList event={eventData}/>;
+      };
+      export default EventsPage;
+      
+      export const loader = async()=>{
+               const response = aswitfetch(...);
+               const eventsList = await response.json();
+               return eventsList;// whatever returns will be a promise and useLoader evaluates and resolves it to get actual data in Page.
+      }
+      
+      App.js:
+      Router Definition:
+      ------------------
+      import EventPage, {loader as loaderFromEventsPage} from '../EventsPage';
+      const router = createBrowserRouter([{path: '/events', element: <EventsPage/>, loader: loaderFromEventsPage, children: [...]}]);
+      
+      Note: In child componets of EventPage element also, we can use useLoader() to get eventsList. But no where else. Not in other routes or child routes, 
+      we will not get the data. But a route points to a page component. Inside that, we might be using other components to create a UI. In such child 
+      components, we can directly use useLoader(). But not in other page or sub-routes. Afterall, sub-routes are two independent components. 
+      ```
+  -    
+
