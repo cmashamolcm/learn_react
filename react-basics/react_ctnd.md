@@ -210,13 +210,36 @@
       - **Using of browser in-built Response object as return of loader function:**
       `This helps us to build/ or directly return response object from fetch API or create a new Response(body, {status: 200}) etc. 
       so that it will get automatically parsed by react-router-dom.`
+      - *What if loader is giving some error like API call failed?*
+      `Loader can check response.ok and throw Error/ Response object/ anything.`
+      - Whatever loader is throwing, will traverse to nearest error page in route hierrachy as bubble up and 
+      - `const error = useRouteError()` can give us the error object thrown from loader. This can be parsed and used to show appropritae error message.
+      - Refer *routing-excercise* project ErrorPage.js and EventsPage.js for sample.
+      - When we throw Response object, error.status can show us the error code.
+      - `json()` utility function in `react-router-dom` helps us to construct Response object easily without using new keyword and throw it.
+      - Eg:
+      ```
+      const loader = async()=>{
+               const resposne = await fetch(...);
+               if(!response.ok){
+                  *throw* new Response({message: 'Error occured'}, {status: 404});// here, useRouteError() will give us this object as Response. 
+                  //error.status, error.data.message
+                  //or
+                  throw json({message: 'Error occured'}, {status: 404});// here, useRouteError() will give us this object as Response. error.status, 
+                  //error.data.message
+                  //or
+                  throw {message: 'anything'}// useRouteError() will give us this object and error.message will give message.
+               }
+      }
+      ```
       - **4 hooks for react-router-dom**
-   ```
+      ```
       ----------------------------------------------------------
       `useNavigate()` - to move to ther pages
       `useParams()` - get path param value
       `useLoaderData()`- get data from loader
       `useNavigation()` - to know the navigation stack info
+      'useRouteError()' - to get error object(can be any object. Preferably Response) thrown from loader.
        ----------------------------------------------------------
-   ```
-   - 
+      ```
+      
