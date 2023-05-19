@@ -106,6 +106,13 @@
             * Export these custom actions
             * Import it in component and use it as `dispatch(customAction(if any params we need to pass to update store state));`
             * This will get executed after a state change happens for store if we call it insdei a useEffect of component.
+       - **Redux hooks**
+```
+        ----------------------------------------------------------
+        - `useDispatch()` - trigger actions
+        - `useSelector((state)=>{return data from state})` - to access state data
+        ----------------------------------------------------------
+```
 31. **Routing:**
    - Routing is process of binding a URL to a component
    - `react-router-dom` is the library to use
@@ -189,7 +196,8 @@
       import EventPage, {loader as loaderFromEventsPage} from '../EventsPage';
       const router = createBrowserRouter([{path: '/events', element: <EventsPage/>, loader: loaderFromEventsPage, children: [...]}]);
       
-      Note: In child components of EventPage element also, we can use useLoader() to get eventsList. But no where else. Not in other routes or child routes, 
+      Note: In child components of EventPage element also, we can use useLoader() to get eventsList. But no where else. Not in other routes or child 
+      routes, 
       we will not get the data. But a route points to a page component. Inside that, we might be using other components to create a UI. In such child 
       components, we can directly use useLoader(). But not in other page or sub-routes. Afterall, sub-routes are two independent components. 
       ```
@@ -202,6 +210,13 @@
       - **Using of browser in-built Response object as return of loader function:**
       `This helps us to build/ or directly return response object from fetch API or create a new Response(body, {status: 200}) etc. 
       so that it will get automatically parsed by react-router-dom.`
-      
-      
-
+      - **4 hooks for react-router-dom**
+   ```
+      ----------------------------------------------------------
+      `useNavigate()` - to move to ther pages
+      `useParams()` - get path param value
+      `useLoaderData()`- get data from loader
+      `useNavigation()` - to know the navigation stack info
+       ----------------------------------------------------------
+   ```
+   - 
