@@ -202,7 +202,8 @@
       components, we can directly use useLoader(). But not in other page or sub-routes. After all, this route and sub-routes are two independent 
       components. 
       ```
-      -*But is there any way so that we can use the loader of a parent route in child?*
+      -*But is there any way so that we can use the loader of a parent route/ already redendered route in child?*
+      - This will avoid repeated calling of same APIs to load data in child routes.
       ```
       Yes. The hook to use is `useRouteLoaderData('is of route to which this loader belongs to.')` 
       ```
@@ -243,10 +244,12 @@
       `useNavigate()` - to move to ther pages
       `useParams()` - get path param value
       `useLoaderData()`- get data from loader
+      `useRouteLoaderData(id of route)` - to use loader of any parent route(precisely, already rendered route) with given id and get results
       `useNavigation()` - to know the navigation stack info
       'useRouteError()' - to get error object(can be any object. Preferably Response) thrown from loader.
       
       `useSubmit()` - to trigger an action programatically for a route.
+      `useActionData()` - to get the response from action if any. 
        ----------------------------------------------------------
       ```
       - Now, what to do if we want to have a loader to fetch some data based on path variable or query param?(*Data loading in Dynamic route*)
@@ -305,4 +308,16 @@
       const navigation = useNagigation();
       const isSubmiting = navigation.state == 'submitting';
       Now, we can use {isSubmiting} to disable button etc in UI to inform the user about the delay.
+      ```
+      - We can throw Response or redirect to another route from acction. But what if we want to return some data from it and use it in route page?
+      - `useActionData()` is in rescue.
+      - Eg:
+      ```
+         const action = async(){
+            const resp = await fetch(...);
+            return resp;
+         }
+         
+         Now, in page, 
+         const action = useActionData();
       ```
