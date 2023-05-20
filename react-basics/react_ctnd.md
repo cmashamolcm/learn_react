@@ -199,7 +199,12 @@
       Note: In child components of EventPage element also, we can use useLoader() to get eventsList. But no where else. Not in other routes or child 
       routes, 
       we will not get the data. But a route points to a page component. Inside that, we might be using other components to create a UI. In such child 
-      components, we can directly use useLoader(). But not in other page or sub-routes. Afterall, sub-routes are two independent components. 
+      components, we can directly use useLoader(). But not in other page or sub-routes. After all, this route and sub-routes are two independent 
+      components. 
+      ```
+      -*But is there any way so that we can use the loader of a parent route in child?*
+      ```
+      Yes. The hook to use is `useRouteLoaderData('is of route to which this loader belongs to.')` 
       ```
       - *This loader can respond late too. Till loader finishes the async data fetch, the page will be waiting to render. Then how can we show the user 
       that page is just loading?*
@@ -240,6 +245,8 @@
       `useLoaderData()`- get data from loader
       `useNavigation()` - to know the navigation stack info
       'useRouteError()' - to get error object(can be any object. Preferably Response) thrown from loader.
+      
+      `useSubmit()` - to trigger an action programatically for a route.
        ----------------------------------------------------------
       ```
       - Now, what to do if we want to have a loader to fetch some data based on path variable or query param?(*Data loading in Dynamic route*)
@@ -250,4 +257,52 @@
          In router defintion, add this loader to EventDetails route ':id'
          Then in EventDetailsPage, use useLoaderData() to get the event info and use it appropriately.
       ```
-      - 
+   - **Actions**: loader does some operation before the page is rendered. Actions are to do something from the page such as a form submission, validation 
+      etc.
+      - How to define actions?
+      `createBrowserRouter({path: '/event/:id', element: <EventDetails/>, action: deleteAction })`
+      - where delete action will look like;
+      ```
+         export const deleteAction = async({request, params})=>{
+              const id = params.id;// from current url
+              const dataToPass = await request.formData(); 
+              const body = {title: dataToPass.get('title'), description: dataToPass.get('description')};
+              const response = await fetch("url", {method: request.method, body: JSON.stringify(body), headres:{'Content-Type': 'application/json'}});
+              if(!response.ok){
+               throw json({message: 'Error'}, {sttaus: 500});
+              }
+              return redirect('/path to land after success of api call');
+             }
+             
+             Note:
+             1. redirect() is a utility function that returns a Response object similar to json(). This will be automatically parsed and navigate to the 
+                path specified inside redirect.
+             2. We get data from route component with `async request.formData()` and then from the object we got, to get the individaul items from form,
+                .get('name of input field') is used if the component has a form and action is called from that. get('key') is name in `<input name="key"/>`
+             3. Here, params holds the parameters if any in current url. Suppose, this form is inside child component of the page which is actual route, 
+                still, the current route will be the path for the page and if some id is there in it, it will be taken.
+      ```
+      - How to invoke action from a route component which has a child component with form?
+      ```
+      1. Use `<Form>` from `react-router-dom` 
+      2. Specify the method if any. Specify the route path as action if we need to trigger an action from some other route.
+      3. <Form method="delete"><input name="title"/><button type="submit">Delete</button></Form> 
+      4. <Form method="post" action="/events/new"><input name="title"/><button type="submit">Delete</button></Form> indicates that in this form, use the 
+         action from route for path '/events/new' and it will be post method.
+      ```
+      - This is in forms. How to trigger an action programatically like on click of a button?
+      - `useSubmit()` hook is the solution.
+      ```
+      const submit = useSubmit();
+      const onClickHandler = ()=>{submit({request body if any. Else can pass null also. await request.formData() in action will return this value.},  
+      {method: "delete"});}
+      ```
+      - Similar to loader, here also *delay can happen. How to handle such things?*
+      - Answer is `useNavigation`.
+      - From an action, if any delay happens, the state will be 'submitting'.
+      - So,
+      ```
+      const navigation = useNagigation();
+      const isSubmiting = navigation.state == 'submitting';
+      Now, we can use {isSubmiting} to disable button etc in UI to inform the user about the delay.
+      ```
