@@ -242,4 +242,12 @@
       'useRouteError()' - to get error object(can be any object. Preferably Response) thrown from loader.
        ----------------------------------------------------------
       ```
-      
+      - Now, what to do if we want to have a loader to fetch some data based on path variable or query param?(*Data loading in Dynamic route*)
+      - The answer is still loader. loader can accept request and params as attributes and use them.
+      - Eg: loader to get event details when we pass event id as params
+      ```
+         export const loader = async({request, params})=>{const resp = fetch('url/params.eventId'); return resp;}
+         In router defintion, add this loader to EventDetails route ':id'
+         Then in EventDetailsPage, use useLoaderData() to get the event info and use it appropriately.
+      ```
+      - 
