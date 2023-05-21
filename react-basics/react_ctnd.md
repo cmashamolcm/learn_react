@@ -372,3 +372,9 @@
    ```
    - This can help us to have multiple API calls in loader and defer will wait until all of them are finished and returns the result. 
    - But will not block the UI also and hence is a nicer user experience. [`return defer({myData: loadData(), otherData: loadOtherData()});`]
+   - *When we have more than one async calls to perform in loader or action, we can add them to json inside defer(). Then each call can take its ow time 
+     and load. Depending on each of the promise, we can create `<Await>s`*
+   - *If we want one async call completed before loading of page and other one can come late, that also can be done with defer by making the one mandatory
+     by marking it as await.*
+   - Refer `EventAndEventDetailsPage.js` in `routing-excercise` project
+   `return defer({events: await getEvents(), eventDetails: getEventDetails(id)})` - here, page loads once getEvents() finished and other one comes lazy.
