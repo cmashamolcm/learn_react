@@ -250,6 +250,7 @@
       
       `useSubmit()` - to trigger an action programatically for a route.
       `useActionData()` - to get the response from action if any. 
+      `useFetcher()`- to trigger only actions/ loaders without transition to owner of loader or action.
        ----------------------------------------------------------
       ```
       - Now, what to do if we want to have a loader to fetch some data based on path variable or query param?(*Data loading in Dynamic route*)
