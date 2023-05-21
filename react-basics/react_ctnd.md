@@ -321,3 +321,7 @@
          Now, in page, 
          const action = useActionData();
       ```
+      - How can we reuse the action? There is nothing like useRouteLoaderData. Instead, we can move the action to a common place and add it individually to 
+        the routes where we are suppose to reuse it. The reason is, loading is anyways repetitive. But output is independent to each route page. So, there 
+        is no point in avoiding redoing of an action to trigger output. If its the same, then may be we can even omit usage of action second time itslef.
+        But in case of loader, its clear that, once loaded data is input and can be re-usable.
