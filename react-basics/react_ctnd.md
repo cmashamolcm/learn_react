@@ -377,4 +377,4 @@
    - *If we want one async call completed before loading of page and other one can come late, that also can be done with defer by making the one mandatory
      by marking it as await.*
    - Refer `EventAndEventDetailsPage.js` in `routing-excercise` project
-   `return defer({events: await getEvents(), eventDetails: getEventDetails(id)})` - here, page loads once getEvents() finished and other one comes lazy.
+   - `return defer({events: await getEvents(), eventDetails: getEventDetails(id)})` - here, page loads once getEvents() finished and other one comes lazy.
