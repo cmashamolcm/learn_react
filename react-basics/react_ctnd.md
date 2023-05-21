@@ -321,7 +321,54 @@
          Now, in page, 
          const action = useActionData();
       ```
-      - How can we reuse the action? There is nothing like useRouteLoaderData. Instead, we can move the action to a common place and add it individually to 
+      - How can we reuse the action? 
+      - There is nothing like useRouteLoaderData. Instead, we can move the action to a common place and add it individually to 
         the routes where we are suppose to reuse it. The reason is, loading is anyways repetitive. But output is independent to each route page. So, there 
         is no point in avoiding redoing of an action to trigger output. If its the same, then may be we can even omit usage of action second time itslef.
         But in case of loader, its clear that, once loaded data is input and can be re-usable.
+  - **Fetcher** `trigger loader or action without a route transition/ navigation`
+      - When we do a submit or Form action, there is a transition to the route of which the action is triggered. If we don not specify the action path 
+        explicitly, it lands to the current route itself. But there can be situations where we don"t want to do a transition to a route but trigger the 
+        action. `useFetcher()` helps us for that.
+      - Consider a new letter signup request avaiable in header itself and we have to trigger the action for that, but no transition to original news
+        letter route. fetcher can help us here.
+      - Eg: 
+      ```
+         const fetcher = useFetcher();
+         <fetcher.Form method= "post" action="/newsLetter">...</fetcher.Form>
+         
+         Here, route will not change but action gets triggered on form submission.
+         fetcher.state, fetcher.data can give the result of action. Fetcher can be used for actions as well as loaders.
+         Eg: 
+         - fetcher.load("path"); if we want to call a loader in places like dialog etc and no navigation required.
+         - fetcher.submit({data obdy}, {method: "post", action:"path"});
+      ```
+  - **defer()**:
+  - When we need to load a page parially and finish it once the loader/ action finishes the async operation, how to do that?
+  - What if the API call we made in loader is very slow..its not good to wait to show the already available part of the page until the API call finishes.
+  - To do that,
+  - return a `defer({key: Promise from async call})`
+  - And the use `<Await>` to render the slow part of UI.
+  - Eg:
+   ```
+   const loadData = async()=>{
+      const response = await fetch(...);
+      const resp = await response.json();
+      return resp;
+      }
+   const loader = ()=>{
+      return defer({myData: loadData()});
+   }
+   
+   Now in page where the useLoaderData is used;
+   
+   const loaderData = useLoaderData();// gives defer object
+   return (<Suspense fallback={<p>Loading</p>}>// Subspense helps us to show a fallback UI until the promise is resolved and loading is done.
+               <Await resolve={loaderData.myData}>//loaderData.myData gives the actual promise/ future
+                  {(resp)=>{<DataShower data={resp}}}// Here, resp is the actual data resolved from promise and can pass to component which will 
+                  //get loaded slowly.
+               </Await>
+         </Suspense);
+   ```
+   - This can help us to have multiple API calls in loader and defer will wait until all of them are finished and returns the result. 
+   - But will not block the UI also and hence is a nicer user experience. [`return defer({myData: loadData(), otherData: loadOtherData()});`]
