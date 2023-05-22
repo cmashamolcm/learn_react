@@ -379,3 +379,20 @@
      by marking it as await.*
    - Refer `EventAndEventDetailsPage.js` in `routing-excercise` project
    - `return defer({events: await getEvents(), eventDetails: getEventDetails(id)})` - here, page loads once getEvents() finished and other one comes lazy.
+31. Authentication:
+   - Why? `To ensure that the resources are accessed by only valid users.`
+   - How to implement auth?
+      1. Define a route `/auth` for login/ singup. Add query param `?mode=login` or `?mode=signup`. 
+         Can use `const [searchParams, setSearchParams] = useSearchParams` to access search/ query params.
+         To get individual params, `searchParams.get('paramKey')`.
+      2. Define an action for route '/auth' so that when we submit login form, we can make abackend call to login. Then result will be token
+      3. In action, write code to set it in localStorage or context or redux.
+      4. Then in root route, define a loader such that it checks if the token is available or not in local storage. If available, control showing UI parts.
+      5. This loader will get executed for subroutes also. We can access the values from loader with `useLoaderData` or
+         `useRouteLoaderData(loader route id)`
+      6. Now, define a logout route and have an action to clear local storage to remove token. 
+      7. `Ensure that loader and action return something (response, json(), redirect() or some object) or else throws something.` 
+         Else routing will not work smoothly.
+      8. To send token with API calls, get token from local storage and then add it to headers of fetch as `headers: {'Authorization': 'Bearer ' + token}`
+      9.  *Also note that, to get the query params in action/ loader, use `new URL(request.url).searchParams`* 
+      10.  Then, to access each of the params, use  `new URL(request.url).searchParams.get('paramKey')`.
