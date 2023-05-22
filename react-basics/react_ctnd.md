@@ -398,3 +398,11 @@
       10.  Then, to access each of the params, use  `new URL(request.url).searchParams.get('paramKey')`.
       Note: **When we access a child route, implict call to loader of parent route happens.
             So, loader of parant can be used with useRouteLoaderData(parentRouteId)**
+   - How to make timeout based logout?
+   ```
+      1. Define a useEffect in base root component and if token is there, set a timeout to clear the token by calling louout action.
+      2. This can go wrong if someon erefresh the page before expiry time. The timer will get reset. To avoid that
+      3. Keep exiry duration in local storage too.
+      4. If the duration in local storage is < 0, clear token and reset expiry inside the setTimeout in useEffect.
+      5. This works if we have a single top most route.
+   ```
