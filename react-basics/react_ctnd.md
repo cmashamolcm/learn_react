@@ -396,3 +396,5 @@
       8. To send token with API calls, get token from local storage and then add it to headers of fetch as `headers: {'Authorization': 'Bearer ' + token}`
       9.  *Also note that, to get the query params in action/ loader, use `new URL(request.url).searchParams`* 
       10.  Then, to access each of the params, use  `new URL(request.url).searchParams.get('paramKey')`.
+      Note: **When we access a child route, implict call to loader of parent route happens.
+            So, loader of parant can be used with useRouteLoaderData(parentRouteId)**
