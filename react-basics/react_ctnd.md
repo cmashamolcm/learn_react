@@ -406,3 +406,42 @@
       4. If the duration in local storage is < 0, clear token and reset expiry inside the setTimeout in useEffect.
       5. This works if we have a single top most route.
    ```
+32. Deploy:
+   - Steps:
+      * Develop
+      * Test
+      * Optimize (lazy, import etc if required)
+      ```
+      To load a component lazily;
+      const BlogPage = lazy(()=>import("./pages/Blog"));
+      const BlogPage = lazy(()=>import("./pages/Blog").then(module=>{return {default: module.BlogPage}}));// If in case, 
+                                                                                    BlogPage is not exported as default.
+      To load a function lazily;
+      const func = import("/pages/BlogPage").then(module=>module.func());
+      //import returns promise. lazy can resolve it and get value against `default` to get JSX component.
+      //In case of functions, call import and get promise and then resolve the promise and call the function from it in callback.
+      ```
+      * Build (npm run build)
+      * Upload to server
+      ```
+      Eg: firebase:
+      1. Login
+      2. Go to Hosting-> get started
+      3. Follow the steps shown in page to install firebase CLI tools etc.
+         * npm install -g firebase-tools
+         * firebase login
+         * firebase init in our project root
+         * Select 'Hosting: Configure files for Firebase Hosting and (optionally) set up GitHub Action deploys'
+         * Select 'use existing project/ create new project option'
+         * What do you want to use as your public directory? - specify build where our code to upload are there
+         * Configure as APA? yes
+         * Set up automatic builds and deploys with GitHub? n
+         *  File build/index.html already exists. Overwrite? n
+         *  Now we will se some files like firebase,json etc.
+         *  Now, `firebase deploy`
+         *  We will get url to access.
+         *  'firebase hosting:disable' to remove app.
+         *  Are you sure you want to disable Firebase Hosting for the site? y
+      ```
+      * Configure server (if single page or not etc.)
+   
