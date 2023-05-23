@@ -60,3 +60,6 @@
 - to add a third party lib,
   * Add inport of lib in .js files (eg: jquery). Then it will get added to bundle. Then to use it;
   * add `new webpack.Provideplugin({$: 'jquery'})` inside plugins [] of webpack.config.js. This indicates that $ means use from jquery library.
+- We can use different config files by specifying 'webpack -config' for prod, dev etc. If there is a common config for prod and dev, use webpack-merge to 
+  inherit common file and use rest of each env by its own.
+- Babel can be integrated with webpack to transpile ES6/7 to browser supported versions. Refer sample project `babel-demo` readme.md for details. 
