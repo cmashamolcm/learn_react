@@ -50,3 +50,10 @@
         {router.query.newsId}. will give us the value of param newsId from URL.
         
       ```
+    * To add links to pages,
+      `use Link from next/link package`
+    ```
+      import Link from 'next/link';
+      <a href="/news">News</a> // will go to localhost:3000/news. but page reloads
+      <Link href="/news">News</Link>// will load news page without reload and acts like click similar to react-router-dom Link.
+    ```
