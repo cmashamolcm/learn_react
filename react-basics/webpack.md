@@ -49,3 +49,13 @@
   }
   
 ```
+- Similar to this, we can use scss and parse it by scss-loader and then using css-loader, we can get it as css. Then with text extractor plugin, we can add all css together in single main.css
+- Note that we need to explictly specify the style src and css path in index.html.
+- babel-loader can be used to convert from ES6 to ES5
+- *.scss is Sassy CSS which is css+ more easy to use like @import, mixin etc. but browser undestands css at the end and we need to convert those files.*
+- Can use file-loader to have images in dist.
+- HtmlWebpackPlugin can be used to create index.html in dist folder. Then localhost:8080 from webpack-dev-server can use html from dist.
+- clean-webpack-plugin can be used to clean dist folder (or any output path before each webpack build.)
+- to add a third party lib,
+  * Add inport of lib in .js files (eg: jquery). Then it will get added to bundle. Then to use it;
+  * add `new webpack.Provideplugin({$: 'jquery'})` inside plugins [] of webpack.config.js. This indicates that $ means use from jquery library.
