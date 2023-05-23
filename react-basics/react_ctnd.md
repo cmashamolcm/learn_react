@@ -410,7 +410,7 @@
    - Steps:
       * Develop
       * Test
-      * Optimize (lazy, import etc if required)
+      * Optimize (lazy, import etc if required) (*Make sure to wrap lazy components with `<Suspense>` to gracefully show the delay if any on page load*)
       ```
       To load a component lazily;
       const BlogPage = lazy(()=>import("./pages/Blog"));
