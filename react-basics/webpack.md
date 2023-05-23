@@ -1,4 +1,5 @@
 1. Webpack:
+  - Static module bundler.
   -Tool to manage and build js code
   - Helps to minify the code for production
 2. Webpack 2.0:
