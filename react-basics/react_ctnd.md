@@ -251,6 +251,9 @@
       `useSubmit()` - to trigger an action programatically for a route.
       `useActionData()` - to get the response from action if any. 
       `useFetcher()`- to trigger only actions/ loaders without transition to owner of loader or action.
+      `useLocation()` - to get data (useLocation().state) we pass from one route to another with navigate("path", {some data}); 
+                        or Link to={{pathname:"path", state: {some data}}} 
+                        refer: https://stackoverflow.com/questions/52238637/react-router-how-to-pass-data-between-pages-in-react#:~:text=in%20another%20component.-,version,-6
        ----------------------------------------------------------
       ```
       - Now, what to do if we want to have a loader to fetch some data based on path variable or query param?(*Data loading in Dynamic route*)
