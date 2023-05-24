@@ -165,4 +165,6 @@
              }
       
       ```
-      - 
+      - *To have static site generation for dynamic pages, we need getStaticPaths(). If we do serverside redenring for dynamic paths, this is not needed*
+      - *Reason is, there, pages are anyways created in server side when url is hit. We will get params from contect.req and 
+        can use it to fetch data if any required to pass as input props to the page.*
