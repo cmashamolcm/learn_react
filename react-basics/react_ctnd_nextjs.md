@@ -127,4 +127,42 @@
              }
            ```
    * But what about dynamic routes? How can we integrate it with these preloadings?
-      -            
+      - When we use dynamic routes, by default the page will be static html.
+      -  If we need to make it have input/ loaded with some data in it based on dynamic param from URL, we have to have useEffect() in it.
+      -  Inside useEffect, use `useRouter().query.<paramName>` to find the dynamic part and load data accordingly to the html.
+         But the problem is, it all happens in client side and the preloaded page will not be filled with all data.
+      - What else can be done?
+      - If we need to make static site generation,we have to prepare all possible pages with dynamic value from route
+      - How to achive this?
+      - `export function getStaticPaths()`
+      - This can return all possible path jsons and then use `getStaticProps()` along with it to load any value from database based on each path 
+        to prepare sttaic pages for all possible paths.
+      - Eg:
+      ```
+      [meetupId].js:
+      --------------
+        const MeetupDetail = (props)=>{
+              return  (<h1>{props.meetup.title}</h1>));
+             }
+             
+             export const getStaticPaths = ()=>{
+                return {paths: [
+                          {params: {meetupId: 'm1'}}, 
+                          {params: {meetupId: 'm2'}},
+                        ],
+                        fallback: true/ false// this helps to decide if we need to create pages for unknown paths on the fly or not.
+                        // if fallback: false => any other params except that we mentioned in paths list, 404 error comes.
+                        // If fallback: true => for unknown params, server will generate html and serve on the go like server side rendering.
+                       };
+             }
+             
+             export const getStaticProps = (context)=>{// here, context is required to provide the params from URL. Cannot use useRouter() here.
+              const id = context.params.meetupId;
+             
+              return {
+                props: {meetup:{inputMeetupId: id, title: "some title"}}
+                };
+             }
+      
+      ```
+      - 
