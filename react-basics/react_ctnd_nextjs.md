@@ -59,9 +59,72 @@
       <a href="/news">News</a> // will go to localhost:3000/news. but page reloads
       <Link href="/news">News</Link>// will load news page without reload and acts like click similar to react-router-dom Link.
     ```
+    * To navigate programatically:
+    ```
+      const router = useRouter();
+      router.push("/new");// will navigate to localhost:3000/new
+    ```
 - **_app.js**
   * This file is special one in pages folder.
   * index.js makes a file root route of the folder.
   * `_app.js` is somewhat similar to the react first entry point index.js.
   * Whatever we need to apply common to all the pages, we can give there. Such as a common layout for all pages. Not components.
--   
+- **Pre-loading/ Pre-rendering**: 
+  * In normal react app, everything is client side routing. But in nextJS, it relies on server-side file-based routing  
+  * `rendering`: generate and paint the html in browser based on the JS and JSON objects
+  * `pre-rendering`: process of building html in advance in server side even before it is required by browser.
+  * So, pre-render makes the html for routes ready in server side so that it is ready to serve
+  * Pre-rendering can be done in 4 ways:
+      - Static pages - already generated and no input values required to create/ load it. Eg: /contact route
+      - SSG - `Static Site Generation` is the process of preparing the html for a route with some input value at the time of build itself.
+              (npm start build)
+            - `export function getStaticProps(){return {props:{props json}}}` if we given in page file, SSG is kicked in.
+            - Sample use cases: Portfolio websites, blogs etc where frequent changes are not there. If any change, will need rebuild
+           ```
+           Eg: 
+             const MeetupsList = (props)=>{
+              return  (<>{props.meetups.map(meetup=><h1>meetup.title</h1>);}</>);
+             }
+             
+             export const getStaticProps = ()=>{
+              return {props: {meetups:[{title: 'meet1'}, {title: 'meet2'}]}};// this loads props for MeetupList page. Can be output from an api call also.
+             } 
+           ```
+      - ISR - `Incremental Static Regeneration` is advanced version of SSG. In  given interval of time, the static pages will be rebuild so that 
+              if any changes happened, that can be accomodated. Eg: /newsList. If we have a new news in database, page for that also can be 
+              made available
+            - Sample use cases: An event listing page which gets new items added in database only at mid nights every day. 
+           ```
+           Eg:
+             const MeetupsList = (props)=>{
+              return  (<>{props.meetups.map(meetup=><h1>meetup.title</h1>);}</>);
+             }
+             
+             export const getStaticProps = ()=>{
+              return {
+                props: {meetups:[{title: 'meet1'}, {title: 'meet2'}]},
+                revalidate: 60 // means, rebuilds the html in every 60 seconds. If browser/ CDN is not caching pages, in every 60minutes, on reload, we get
+              page with changes included if any.
+              };// this loads props for MeetupList page. Can be output from an api call also.
+             } 
+           
+           ```
+      - SSR - `Server Side Rendering` is creating the html for a page whenever a request for that route comes. This is costly as every time it is done.
+              So, prefer it if nothing works with static or incremenatl approaches.
+            - If `export const getServerSideProps` is found in a page file, that page will be enabled with server side rendering.
+            - Sample usecase: An seat booking page. That can vary every time depending on booking from other users also.
+           ```
+           Eg:
+            const MeetupsList = (props)=>{
+              return  (<>{props.meetups.map(meetup=><h1>meetup.title</h1>);}</>);
+             }
+             
+             export const getServerSideProps = (context)=>{// context can hold req and res so that each time, when url hits, html can be build accordingly.
+              return {
+                props: {meetups:[{title: 'meet1'}, {title: 'meet2'}]}
+              }
+              };// this loads props for MeetupList page. Can be output from an api call also.
+             }
+           ```
+   * But what about dynamic routes? How can we integrate it with these preloadings?
+      -            
