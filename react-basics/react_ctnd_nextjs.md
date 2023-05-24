@@ -9,6 +9,8 @@
     * Helps crawlers as pages comes with real html content from server side and hence is search engine optmized.
     * NextJS can easily integrate backend as well. So, it is capable of providing backend and frontend together 
       with nodeJS in backend and reactJS in frontend.
+    * *react is not so bothered about how we bundle our modules etc. But nextJS takes care of that as well. That helps it in file based routing also*
+    * nextJS makes writing code easier without burden of giving route definitions etc.
  - How is NextJS working?
     * Based on `file based routing`
     * Pages are loaded with respect to file name based routes
@@ -57,3 +59,9 @@
       <a href="/news">News</a> // will go to localhost:3000/news. but page reloads
       <Link href="/news">News</Link>// will load news page without reload and acts like click similar to react-router-dom Link.
     ```
+- **_app.js**
+  * This file is special one in pages folder.
+  * index.js makes a file root route of the folder.
+  * `_app.js` is somewhat similar to the react first entry point index.js.
+  * Whatever we need to apply common to all the pages, we can give there. Such as a common layout for all pages. Not components.
+-   
