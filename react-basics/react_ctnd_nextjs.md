@@ -211,4 +211,6 @@
     - Then how to connect to database to load data to pages?
     - `We can directly use logics and libs for data source access in pages. NextJS will exclude this from code we send to client-side browser 
       and use nly in server side. Hence it will not increase bundle size and gives security as code is only in server side.`
+    - Refer `[meetupId].js` in `nextjs-meetup-project`
+    - We can use database connections inside `getStaticProps()` also to get path details while generating static pages with SSG preloading approach.
   
