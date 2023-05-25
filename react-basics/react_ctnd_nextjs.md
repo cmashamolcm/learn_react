@@ -213,4 +213,15 @@
       and use nly in server side. Hence it will not increase bundle size and gives security as code is only in server side.`
     - Refer `[meetupId].js` in `nextjs-meetup-project`
     - We can use database connections inside `getStaticProps()` also to get path details while generating static pages with SSG preloading approach.
-  
+- *How to show head tag details like title, meta info etc so that **page is search engine optimized?***
+  ```
+    import Head from 'next/head';
+    const MyPage = (props)=>{
+      <>
+        <Head>
+          <title>Some title to show in tab as title</title>// title is constant value here
+          <meta name="description" content={props.someDescription}/>// here, it is from static or server side props.
+        </Head>
+      </>
+    }
+  ```
