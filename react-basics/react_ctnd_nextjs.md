@@ -225,3 +225,8 @@
       </>
     }
   ```
+- **Deployement:**
+  * Refer https://medium.com/nerd-for-tech/lets-deploy-a-next-js-app-with-firebase-hosting-e070b3aecd04 for basic firebase hosting (wihout dynamic update).
+  * Note that, we have to build our app as 'next build && next export'
+  * `firebase hosting:disable` to demove deployment
+- Can deployment in vercel platform as well which is provided by nextJS team.
