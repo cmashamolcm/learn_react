@@ -171,5 +171,44 @@
  - **api routes:**
     - This makes nextJS fullstack.    
     - API routes are those files written under `api` folder within `pages` folder.
-    -    
+    - These are the real nodejs files that can connect to databases etc.
+    - API file will have a function exported as default from it.
+    - Just by using `fetch` and `/api/file-name`, we can access the REST API endpoints.
+    - Sample:
+    ```
+    page:
+      -new-meetup.js
+        const NewMeetupPage = ()=>{
+          const clickHandler = async()=>{
+            // relative path is fine here
+            const resp = await fetch("/api/create-meetup", {method: "post", body: {json}, headers: {"Content-Type": "application/json"}}}) 
+            
+            //to redirect
+            useRouter().push("/");// or useRouter().replace("/");// to pop current one from navigation stack and add new page
+          
+          }
+          
+          return <button onClick={clickHandler}></button>;
+        }
+        export default NewMeetupPage;
+        
+      - api
+          - create-meetup.js
+            const createMeetupHandler = (req, res)=>{
+              if(req.method == "POST"){// need to be capital POST as fetch sends it that way always
+                 const data = req.body;
+                // db connection and save
+                
+                res.status(201).end(); // or res.status(201).send({json});// If not given end() or send(), infinite wait happens and no return.
+              }
+               
+            }
+            export default createMeetupHandler;
+    
+    ```
+    - Now; how can we connect to database at time of static site geration etc?
+    - `The /api thing will not work from getStaticProps(). May be since the api routes are not ready at build time before pages.`
+    - Then how to connect to database to load data to pages?
+    - `We can directly use logics and libs for data source access in pages. NextJS will exclude this from code we send to client-side browser 
+      and use nly in server side. Hence it will not increase bundle size and gives security as code is only in server side.`
   
