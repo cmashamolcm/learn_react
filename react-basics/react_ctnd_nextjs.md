@@ -153,6 +153,10 @@
                         fallback: true/ false// this helps to decide if we need to create pages for unknown paths on the fly or not.
                         // if fallback: false => any other params except that we mentioned in paths list, 404 error comes.
                         // If fallback: true => for unknown params, server will generate html and serve on the go like server side rendering.
+                                                but first browser gets empty page and then later the roginal one. 
+                                                So, we have to handle the gap between these 2 loads. Btter is 'blocking'
+                        //If fallback: "blocking" => the page is loaded once server finished pre-render for a non-existing path. 
+                                                Till then browser have to wait.
                        };
              }
              
