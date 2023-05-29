@@ -31,7 +31,8 @@
        //const element = screen.getByText("Welcome to TEST", {exact: false});// search irrespective of capital or small, also for substring. 
        //If not found, exception
        //const element = screen.queryByText("Welcome to TEST", {exact: false});// returns null if not found. No exception.
-       //const element = screen.findByText("Welcome to TEST", {exact: false});// returns a promise
+       //If more than one found in query, exception.
+       //const element = screen.findByText("Welcome to TEST", {exact: false});// returns a promise if found. Else, exception.
        
        expect(element).toBeInTheDocument();
        //expect(element).not.toBeInTheDocument();// if need to check if not present
@@ -141,4 +142,5 @@
       });
     
     ```
+    * get vs query vs find: https://testing-library.com/docs/queries/about/#:~:text=queryOptions%2C%20waitForOptions))-,Summary,-Table
       
