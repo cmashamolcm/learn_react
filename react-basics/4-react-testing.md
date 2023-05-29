@@ -143,4 +143,35 @@
     
     ```
     * get vs query vs find: https://testing-library.com/docs/queries/about/#:~:text=queryOptions%2C%20waitForOptions))-,Summary,-Table
+    * Also refer: https://levelup.gitconnected.com/the-difference-between-get-find-query-react-testing-library-bcd996ba3baa
+    * Use `msw`(mock server worker) to mock end points with mock server.
+    * When we use `axios` etc, if it will be non-transpiled EcmaScript module inside node_modules folder.
+      `jest` will not be able to understand it as it is not common JS format. 
+      We have to explicitly specify in `package.json` as
+    ```
+    'jest': {
+      "moduleNameMapper": {
+        "axios": "axios/dist/node/axios.cjs"
+      }
+    }
+    ```
+    so that `jest` can use to `axios/dist/node/axios.cjs` instead of the one from node_modules. 
+    Else error comes as `jest` cannot understand EcmaScript version. We can use `transformIgnorePatterns` also to ignore ES6 version.
+   * We can add it in `jest.config.js` or `jest.config.json` also.
+   * **Test life cycle methods**
+    `beforeAll()`
+    `afterAll()`
+    `afterEach()`
+    `beforeEach()` etc.
+    **Note that the scope of these life cycles are within file or if they are inside a describe(), test suit, within that describe. Not scoped outside.**
+    https://jestjs.io/docs/setup-teardown#scoping
+   * Test suit: To have logical/ functional grouping for tests. 
+   `describe("test suit 1", ()=>{
+          test("test description", ()=>{test body});//add any number of test() to test suit.
+      });
+   * **All describes and its beforeAll* and body except test() gets executed first. 
+     Then only the execution of test()s inside them starts. For each test, before* and after* works. 
+     So, we can give beforeAll() and afterAll() outside of all describe() as they are almost like execucting together.**
+   * Configure a property called `bail` to true in package.json or jest.config.json to terminate test on first failure. 
+     Else it shows errors after finishing all.
       
