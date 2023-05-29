@@ -176,4 +176,6 @@
      Else it shows errors after finishing all.
    * To test hooks, use `import { act, renderHook } from "@testing-library/react-hooks";`
    * Refer `useCounter.test.js` in testing project.
+   * *setupTest.js*:
+      `To add jest matchers like toBeInTheDocument() etc.`. This file is used as setupFile for npm run test.
       
