@@ -14,4 +14,10 @@
   - Usgae:
     - `npm install typescript`
     - `npx tsc <file name>` to convert/ compile `.ts` to `.js`.
+  - Types:
+    * Primitives (number, boolean, string, null, undefined)
+    * Complex type (array, object)
+    * Function and parameters (function fun(a: number, b: string){return false;})// infers return type as boolean here.
+    * Generics (let function add<T>(a:T, b:T[]){}; // T is generic type which can be anything at the time of using it. 
+      add<number>(1, [2, 3])// explicitly specified here or add(1, [2, 3])//infers here
   
