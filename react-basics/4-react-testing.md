@@ -92,6 +92,40 @@
       import {render, screen} from '@testing-library/react';
       import userEvent from '@testing-library/user-event';
       
+      test("Description of test", async()=>{
+        //arrange
+        render(<App/>);   
+        //act if any
+        //assert
+        const element = await screen.findByTestId("post-test-id");// findBy returns a promise and hence after fetch completes, we get data.
+        //But queryBy or getBy are immediate and hence will not wait for async action to complete and will fail the test. So, `findBy` is used.
+        expect(element).not.toBeNull();
+      });
+    
+    ```
+    * Eg: with Async mocked:
+     ```
+     App.js:
+    -------
+      const App = ()=>{
+        const [post, setPost] = useState(null);
+        useEffect(async()=>{
+          const resp = await fetch('url');
+          const post = await resp.json();
+          setPost(post);
+        }, []);
+        return (<>
+            <h1>Welcome to testing</h1>
+            {post && <p data-testid="post-test-id">{post.title}</p>}
+            </>);
+      }
+      export default App;
+      
+    App.test.js:
+    ------------
+      import {render, screen} from '@testing-library/react';
+      import userEvent from '@testing-library/user-event';
+      
       test("Description of test", ()=>{
         //arrange
         render(<App/>);
@@ -102,7 +136,7 @@
         
         //act if any
         //assert
-        const element = screen.findByTestId("post-test-id");
+        const element = screen.queryByTestId("post-test-id");
         expect(element).not.toBeNull();
       });
     
