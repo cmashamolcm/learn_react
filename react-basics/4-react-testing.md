@@ -174,4 +174,6 @@
      So, we can give beforeAll() and afterAll() outside of all describe() as they are almost like execucting together.**
    * Configure a property called `bail` to true in package.json or jest.config.json to terminate test on first failure. 
      Else it shows errors after finishing all.
+   * To test hooks, use `import { act, renderHook } from "@testing-library/react-hooks";`
+   * Refer `useCounter.test.js` in testing project.
       
