@@ -90,5 +90,7 @@
     * When we need flexibilty of polymorphic types
     * When we need to support declaration merging.
       ***(With same name, if we define type with different properties, it will be treated as a merged type.)***
+  - use class
+    * When we want to use new keyword to create an object of the type.
   https://stackoverflow.com/questions/37233735/interfaces-vs-types-in-typescript#:~:text=Declaration-,Merging,-You%20can%20use
   ```
