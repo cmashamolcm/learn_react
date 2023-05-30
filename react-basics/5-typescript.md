@@ -50,4 +50,45 @@
         return <h1>{props.data}</h1>;
     }
   ```
+  * What if we want to use normal function instead of arrown function to define component?
+  ```
+    function Todo(props: React.PropsWithChildren<TodoType>){
+        return <h1>{props.data}</h1>;// here, props.children also will be available. We can just use TodoType for props. 
+                                     //But then children etc will be missing to access.
+    }
   
+  ```
+  * We can use class, interface or type to define a type.
+  ```
+  // with type
+    type Todo = {
+        id: number;
+        title: string;
+    }
+  // with class
+  class Todo{
+    id: number;
+    title: string;
+  
+    constructor(id: number, title: string){
+      this.id = id;
+      this.title = title;
+    };
+  }
+  
+  // with interface
+  interface Todo{
+    id: number;
+    title: string;
+  }
+  
+  When to use type vs interface?
+  - Use type 
+    * to combine other types (type SomeType = null | undefined| string)
+    * Capture type of an object use that as type;// type x = typeof y;
+  - Use interface
+    * When we need flexibilty of polymorphic types
+    * When we need to support declaration merging.
+      ***(With same name, if we define type with different properties, it will be treated as a merged type.)***
+  https://stackoverflow.com/questions/37233735/interfaces-vs-types-in-typescript#:~:text=Declaration-,Merging,-You%20can%20use
+  ```
