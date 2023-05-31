@@ -94,3 +94,29 @@
     * When we want to use new keyword to create an object of the type.
   https://stackoverflow.com/questions/37233735/interfaces-vs-types-in-typescript#:~:text=Declaration-,Merging,-You%20can%20use
   ```
+  * How to give types for event param of onClick, onSubmit etc?
+  ```
+  const submitHandler = (event: FormEvent)=>{event.preventDefault();//do something.};// For click, it will be MouseEvent
+  <form onSubmit={submitHandler}></form>
+  ```
+  * Types for useRef:
+    - For all hooks, we can pass type like generics.
+    - Else, it will assume type as useRef of type `undefined`. (`const ref = useRef(); //means a ref with type `udefined`.`)
+    - Don't forget to add a default value as well.
+    ```
+      const ref = useRef<HTMLInputElement>(null);//HTMLInputElement is used here as we have ref for <input>. If it is button, it may be HTMLButtonElement.
+      <input ref={ref}></input>
+    ```
+  * How to pass function to a component?
+   ```
+      const NewTodo: React.FC<{addTodo: (text: string)=>void}> // Here, addTodo is function with one param string and void as return type.
+                    = (props)=>{return JSX;}// we can use props.addTodo("some text");
+   ```
+  * How to add type to state?
+  ```
+    Similar to useRef or any other hook.
+    const [todos, setTodos] = useState<Todo[]>([]);//indicates that this state contains object of type Todo list.
+    If we give like;
+    const [todos, setTodos] = useState([]);// no error comes. But type script assumes that the type here is, ***never[]*** (as it is array in left side).
+    const [singleTodo, setSingleTodo] = useState();// this will assume state of type udefined.
+  ```
