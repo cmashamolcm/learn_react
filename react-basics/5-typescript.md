@@ -120,3 +120,15 @@
     const [todos, setTodos] = useState([]);// no error comes. But type script assumes that the type here is, ***never[]*** (as it is array in left side).
     const [singleTodo, setSingleTodo] = useState();// this will assume state of type udefined.
   ```
+  **
+  Note:
+  const fun1: ()=>void;
+  const fun2 = (text: string)=>void;
+  If we want to do;
+  //fun1 = fun2 will give error.
+  But;
+  fun1 = fun2.bind(null, "some text to use at execution");
+  // will work as bind already set the value for param and hence result of fun2.bind() will give function that can accept value or null.
+      
+  fun2.bind(obj1, "something");// retuns a function that is bound to current `this` and passed a default value "something" for the text while calling it.
+  **
