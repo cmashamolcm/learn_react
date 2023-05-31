@@ -121,6 +121,7 @@
     const [singleTodo, setSingleTodo] = useState();// this will assume state of type udefined.
   ```
   **
+  
   Note:
   const fun1: ()=>void;
   const fun2 = (text: string)=>void;
@@ -131,4 +132,15 @@
   // will work as bind already set the value for param and hence result of fun2.bind() will give function that can accept value or null.
       
   fun2.bind(obj1, "something");// retuns a function that is bound to current `this` and passed a default value "something" for the text while calling it.
+  
   **
+  
+  * tsconfig.json:
+    - this file helps compiling of ttypescript to js.
+    - Some properies:
+      ```
+        target: 'es5' // compile to es5
+        libs:["dom", "esnext"] // gives the type libraries for react-dom etc.
+        strict: true //makes type strict
+        jsx: "react-jsx" //what si .jsx means here etc.
+      ```
