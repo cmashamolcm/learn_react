@@ -52,5 +52,12 @@
 9. Disadvatages:
         - Many services, many configurations and then devOps is not easy
         - Download size is more as each component loads its own libraries
+10. Module federaion:
+         - JS architecture that helps to dynamically load code from other applications hosted somewhere
+         - React.lazy() is used with `<Suspense/>` in consuers side
+         - ModuleFederation plugin in webpack 5 helps to achive it.
+         - Mostly, the remote app tries to use libraies form host app which is already rendered so that bundle size can be reduced.
+         - `shared` attribute of module federation plugin helps for code sharing to avoid duplicates.
+         - https://indepth.dev/posts/1173/webpack-5-module-federation-a-game-changer-in-javascript-architecture
    
    
