@@ -48,3 +48,8 @@
          - custom elements
          - shadow dom (private to component)
          - HTML templates
+9. Disadvatages:
+        - Many services, many configurations and then devOps is not easy
+        - Download size is more as each component loads its own libraries
+   
+   
