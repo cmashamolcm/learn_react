@@ -42,6 +42,7 @@
          - Not flexible
          - But sharing of data can be easy as iframe is just like another component of an app.
          - But recommended is to use event bus for communication between base service and service renered inside iframe.
+         - https://codeburst.io/4-practical-ways-to-build-micro-frontends-4dc4f0b8a921
      - With Web components
          - concepts includes
          - custom elements
