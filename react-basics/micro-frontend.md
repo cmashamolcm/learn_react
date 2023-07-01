@@ -35,6 +35,7 @@
              - via local storage or any other browser APIs
              - via CustomEvent listeners
              - via event bus and libraries to manage those can be integrated with our app
+             - In IFrames, POST messages can be used to interact
      - With IFrames
          - old technology
          - Isolates each service
